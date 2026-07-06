@@ -1,0 +1,32 @@
+{
+  "name": "Chunk Trainer — английский по чанкам",
+  "short_name": "Chunk Trainer",
+  "description": "Тренажёр английских чанков: темы, недели, повторения, свои примеры и режим с Тёмой.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0d1210",
+  "theme_color": "#0d1210",
+  "lang": "ru-RU",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./icons/icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

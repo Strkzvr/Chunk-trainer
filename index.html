@@ -4,6 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Chunk Trainer — английский по чанкам</title>
+  <meta name="theme-color" content="#0d1210">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Chunk Trainer">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./icons/icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+
   <style>
     :root{
       --bg:#0d1210; --bg2:#111a15; --panel:#17211c; --panel2:#1f2b25; --card:#121a16; --text:#f3f7f1;
@@ -107,7 +116,8 @@ const DAY_PLANS = [
 let settings = loadJSON('settings',{topic:'universal',weeks:4,week:1,view:'today',deck:'today'});
 let states = loadJSON('states',{});
 let customChunks = loadJSON('customChunks',[]);
-let scores = loadJSON('scores',{dad:0,san:0});
+let scores = loadJSON('scores',{dad:0,tema:0});
+scores = {dad:Number(scores.dad)||0, tema:Number(scores.tema ?? scores.san)||0};
 let trainer = {index:0,flipped:false};
 let gameIndex = 0;
 function $(id){return document.getElementById(id)}
@@ -130,11 +140,12 @@ function weeklyChunks(){return weeklyBase().concat(weeklyCustom())}
 function currentPlanChunks(){const p=DAY_PLANS[todayIndex()]; const base=weeklyBase(); return base.slice(p.range[0],p.range[1])}
 function stateOf(id){return states[id]||{status:'new',example:'',due:null,reps:0}}
 function setState(id,patch){states[id]={...stateOf(id),...patch,updated:new Date().toISOString()}; saveJSON('states',states)}
-function dueChunks(){const today=isoToday(); return weeklyChunks().filter(c=>{const st=stateOf(c.id); return st.status==='hard'||st.status==='repeat'||(st.due&&st.due<=today&&st.status!=='known')})}
+function dueChunks(){const today=isoToday(); return weeklyChunks().filter(c=>{const st=stateOf(c.id); return st.status==='hard'||st.status==='repeat'||(st.due&&st.due<=today)})}
 function hardChunks(){return weeklyChunks().filter(c=>stateOf(c.id).status==='hard')}
 function deckChunks(){if(settings.deck==='all')return weeklyChunks(); if(settings.deck==='due')return dueChunks(); if(settings.deck==='hard')return hardChunks(); return uniqueById(currentPlanChunks().concat(dueChunks()))}
 function uniqueById(arr){const seen=new Set(); return arr.filter(x=>!seen.has(x.id)&&seen.add(x.id))}
-function init(){fillTopics();fillWeeks();bind();render()}
+function sanitizeSettings(){const validTopics=topicKeys().concat(['mixed']); if(!validTopics.includes(settings.topic))settings.topic='universal'; settings.weeks=Number(settings.weeks)||4; if(![2,4,6,8,12].includes(settings.weeks))settings.weeks=4; settings.week=Math.min(Math.max(1,Number(settings.week)||1),settings.weeks); if(!['today','week','trainer','custom','son'].includes(settings.view))settings.view='today'; if(!['today','due','all','hard'].includes(settings.deck))settings.deck='today';}
+function init(){sanitizeSettings();fillTopics();fillWeeks();bind();render()}
 function fillTopics(){const s=$('topicSelect'); s.innerHTML=''; topicKeys().forEach(k=>{const o=document.createElement('option'); o.value=k; o.textContent=`${DATA[k].emoji} ${DATA[k].title}`; s.appendChild(o)}); const mix=document.createElement('option'); mix.value='mixed'; mix.textContent='🌍 Смешанный набор'; s.appendChild(mix); s.value=settings.topic}
 function fillWeeks(){const s=$('weekSelect'); s.innerHTML=''; for(let i=1;i<=settings.weeks;i++){const o=document.createElement('option'); o.value=i; o.textContent='Неделя '+i; s.appendChild(o)} s.value=settings.week; $('weeksSelect').value=settings.weeks}
 function bind(){
@@ -143,11 +154,11 @@ function bind(){
  $('weekSelect').onchange=e=>{settings.week=Number(e.target.value); trainer.index=0; persistSettings(); render()};
  document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{settings.view=b.dataset.view; persistSettings(); render()});
  document.querySelectorAll('[data-deck]').forEach(b=>b.onclick=()=>{settings.deck=b.dataset.deck; trainer.index=0; trainer.flipped=false; persistSettings(); renderTrainer()});
- $('todayBtn').onclick=()=>{settings.view='today'; persistSettings(); render()}; $('autoDayBtn').onclick=()=>renderToday(); $('startTodayBtn').onclick=()=>{settings.view='trainer';settings.deck='today';trainer.index=0;trainer.flipped=false;persistSettings();render()}; $('startAllBtn').onclick=()=>{settings.view='trainer';settings.deck='all';trainer.index=0;trainer.flipped=false;persistSettings();render()};
- $('resetWeekBtn').onclick=resetWeek; $('flipBtn').onclick=()=>{trainer.flipped=true;renderTrainer()}; $('prevBtn').onclick=()=>moveTrainer(-1); $('nextBtn').onclick=()=>moveTrainer(1); $('repeatBtn').onclick=()=>markCurrent('repeat'); $('hardBtn').onclick=()=>markCurrent('hard'); $('knowBtn').onclick=()=>markCurrent('known'); $('speakTrainerBtn').onclick=()=>{const c=deckChunks()[trainer.index]; if(c)speak(c.en)};
+ $('todayBtn').onclick=()=>{settings.view='today'; persistSettings(); render()}; $('autoDayBtn').onclick=()=>{settings.view='today';settings.deck='today';trainer.index=0;trainer.flipped=false;persistSettings();render()}; $('startTodayBtn').onclick=()=>{settings.view='trainer';settings.deck='today';trainer.index=0;trainer.flipped=false;persistSettings();render()}; $('startAllBtn').onclick=()=>{settings.view='trainer';settings.deck='all';trainer.index=0;trainer.flipped=false;persistSettings();render()};
+ $('resetWeekBtn').onclick=resetWeek; $('flipBtn').onclick=()=>{trainer.flipped=!trainer.flipped;renderTrainer()}; $('prevBtn').onclick=()=>moveTrainer(-1); $('nextBtn').onclick=()=>moveTrainer(1); $('repeatBtn').onclick=()=>markCurrent('repeat'); $('hardBtn').onclick=()=>markCurrent('hard'); $('knowBtn').onclick=()=>markCurrent('known'); $('speakTrainerBtn').onclick=()=>{const c=deckChunks()[trainer.index]; if(c)speak(c.en)};
  $('ownExample').oninput=()=>{const c=deckChunks()[trainer.index]; if(c){setState(c.id,{example:$('ownExample').value}); renderStats(false)}};
  $('customForm').onsubmit=addCustom; $('exportBtn').onclick=exportData; $('importFile').onchange=importData; $('clearCustomBtn').onclick=clearCustom;
- $('resetScoreBtn').onclick=()=>{scores={dad:0,san:0}; saveJSON('scores',scores); renderSon()}; $('showGameAnswerBtn').onclick=()=>{$('gameAnswer').hidden=false}; $('speakGameBtn').onclick=()=>{const c=gameDeck()[gameIndex]; if(c)speak(c.en)}; $('dadPointBtn').onclick=()=>{scores.dad++; saveJSON('scores',scores); renderSon()}; $('sanPointBtn').onclick=()=>{scores.san++; saveJSON('scores',scores); renderSon()}; $('nextGameBtn').onclick=()=>{gameIndex=(gameIndex+1)%gameDeck().length; renderSon()};
+ $('resetScoreBtn').onclick=()=>{scores={dad:0,tema:0}; saveJSON('scores',scores); renderSon()}; $('showGameAnswerBtn').onclick=()=>{$('gameAnswer').hidden=false}; $('speakGameBtn').onclick=()=>{const c=gameDeck()[gameIndex]; if(c)speak(c.en)}; $('dadPointBtn').onclick=()=>{scores.dad++; saveJSON('scores',scores); renderSon()}; $('sanPointBtn').onclick=()=>{scores.tema++; saveJSON('scores',scores); renderSon()}; $('nextGameBtn').onclick=()=>{gameIndex=(gameIndex+1)%gameDeck().length; renderSon()};
 }
 function persistSettings(){saveJSON('settings',settings)}
 function render(){
@@ -160,7 +171,7 @@ function renderToday(){const p=DAY_PLANS[todayIndex()]; const today=currentPlanC
 function renderChips(id,arr,cls){const box=$(id); box.innerHTML=''; if(!arr.length){const el=document.createElement('span'); el.className='chip green'; el.textContent='чисто'; box.appendChild(el); return} arr.forEach((c,i)=>{const el=document.createElement('span'); el.className='chip '+cls; el.textContent=`${i+1}. ${c.en}`; box.appendChild(el)})}
 function renderWeek(){const box=$('weekList'); box.innerHTML=''; weeklyChunks().forEach((c,i)=>box.appendChild(chunkCard(c,i)))}
 function chunkCard(c,i){const st=stateOf(c.id); const el=document.createElement('article'); el.className='chunkCard '+(st.status||'new'); el.innerHTML=`<div class="chunkTop"><span class="num">${i+1}</span><span class="source">${escapeHtml(c.source)} · ${statusLabel(st.status)}</span></div><h3>${escapeHtml(c.en)}</h3><p class="ru">${escapeHtml(c.ru)}</p><div class="examples">${c.examples.map(x=>`<div>→ ${escapeHtml(x)}</div>`).join('')}</div>${st.example?`<div class="ownMini">Мой пример: ${escapeHtml(st.example)}</div>`:''}<div class="actions"><button class="btn ghost small" data-speak="${c.id}">🔊</button><button class="btn small" data-train="${c.id}">Тренировать</button><button class="btn danger small" data-hard="${c.id}">Сложно</button></div>`; el.querySelector('[data-speak]').onclick=()=>speak(c.en); el.querySelector('[data-train]').onclick=()=>{settings.view='trainer'; settings.deck='all'; trainer.index=Math.max(0,deckChunks().findIndex(x=>x.id===c.id)); trainer.flipped=false; persistSettings(); render()}; el.querySelector('[data-hard]').onclick=()=>{setState(c.id,{status:'hard',due:isoToday(0)}); render()}; return el}
-function renderTrainer(){const arr=deckChunks(); document.querySelectorAll('[data-deck]').forEach(b=>{b.className='btn small '+(b.dataset.deck===settings.deck?'primary':'ghost')}); $('trainerDeckName').textContent={'today':'Сегодня','due':'Повтор','all':'Вся неделя','hard':'Сложные'}[settings.deck]||'Тренировка'; if(!arr.length){$('trainerCount').textContent='0 / 0'; $('trainerPrompt').textContent='Нет карточек для этого режима'; $('answerBox').hidden=true; $('ownExample').value=''; $('statusHint').textContent=''; return} trainer.index=(trainer.index+arr.length)%arr.length; const c=arr[trainer.index]; const st=stateOf(c.id); $('trainerCount').textContent=`${trainer.index+1} / ${arr.length}`; $('trainerPrompt').textContent=c.ru; $('trainerAnswer').textContent=c.en; $('trainerExamples').innerHTML=c.examples.map(x=>`<div>→ ${escapeHtml(x)}</div>`).join(''); $('answerBox').hidden=!trainer.flipped; $('flipBtn').textContent=trainer.flipped?'Ответ открыт':'Показать английский'; $('ownExample').value=st.example||''; $('statusHint').textContent=st.status==='known'?'Уже отмечено как «Знаю».':st.status==='hard'?'Отмечено как сложное.':st.status==='repeat'?'Стоит на повторении.':''}
+function renderTrainer(){const arr=deckChunks(); document.querySelectorAll('[data-deck]').forEach(b=>{b.className='btn small '+(b.dataset.deck===settings.deck?'primary':'ghost')}); $('trainerDeckName').textContent={'today':'Сегодня','due':'Повтор','all':'Вся неделя','hard':'Сложные'}[settings.deck]||'Тренировка'; if(!arr.length){$('trainerCount').textContent='0 / 0'; $('trainerPrompt').textContent='Нет карточек для этого режима'; $('answerBox').hidden=true; $('ownExample').value=''; $('statusHint').textContent=''; return} trainer.index=(trainer.index+arr.length)%arr.length; const c=arr[trainer.index]; const st=stateOf(c.id); $('trainerCount').textContent=`${trainer.index+1} / ${arr.length}`; $('trainerPrompt').textContent=c.ru; $('trainerAnswer').textContent=c.en; $('trainerExamples').innerHTML=c.examples.map(x=>`<div>→ ${escapeHtml(x)}</div>`).join(''); $('answerBox').hidden=!trainer.flipped; $('flipBtn').textContent=trainer.flipped?'Скрыть ответ':'Показать английский'; $('ownExample').value=st.example||''; $('statusHint').textContent=st.status==='known'?'Уже отмечено как «Знаю».':st.status==='hard'?'Отмечено как сложное.':st.status==='repeat'?'Стоит на повторении.':''}
 function moveTrainer(delta){const arr=deckChunks(); if(!arr.length)return; trainer.index=(trainer.index+delta+arr.length)%arr.length; trainer.flipped=false; renderTrainer()}
 function markCurrent(status){const arr=deckChunks(); const c=arr[trainer.index]; if(!c)return; const ex=$('ownExample').value.trim(); if(status==='known' && !ex){$('statusHint').textContent='Сначала напиши свой пример. Так чанк лучше закрепится.'; $('ownExample').focus(); return} const patch={status,example:ex||stateOf(c.id).example||'',reps:(stateOf(c.id).reps||0)+1}; if(status==='known') patch.due=isoToday(7); if(status==='repeat') patch.due=isoToday(1); if(status==='hard') patch.due=isoToday(0); setState(c.id,patch); renderStats(); moveTrainer(1)}
 function statusLabel(s){return {known:'знаю',repeat:'повторить',hard:'сложно',new:'новый'}[s||'new']}
@@ -169,12 +180,22 @@ function renderCustom(){const arr=weeklyCustom(); $('customHint').innerHTML=arr.
 function addCustom(e){e.preventDefault(); const en=$('customEn').value.trim(),ru=$('customRu').value.trim(); if(!en||!ru)return; customChunks.push({id:'custom-'+Date.now(),topic:settings.topic,week:settings.week,en,ru,examples:$('customEx').value.trim()?[$('customEx').value.trim()]:[],source:$('customSource').value.trim()||'свой источник',createdAt:new Date().toISOString()}); saveJSON('customChunks',customChunks); e.target.reset(); render()}
 function clearCustom(){if(!confirm('Удалить свои чанки из текущей темы и недели?'))return; customChunks=customChunks.filter(c=>!(c.topic===settings.topic&&Number(c.week)===Number(settings.week))); saveJSON('customChunks',customChunks); render()}
 function exportData(){const payload={version:2,settings,states,customChunks,scores,exportedAt:new Date().toISOString()}; const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='chunk-trainer-data.json'; a.click(); URL.revokeObjectURL(url)}
-function importData(e){const file=e.target.files[0]; if(!file)return; const reader=new FileReader(); reader.onload=()=>{try{const obj=JSON.parse(reader.result); if(Array.isArray(obj.customChunks))customChunks=customChunks.concat(obj.customChunks); if(obj.states&&typeof obj.states==='object')states={...states,...obj.states}; saveJSON('customChunks',customChunks); saveJSON('states',states); render()}catch(err){alert('Не удалось импортировать файл.')}}; reader.readAsText(file)}
+function importData(e){const file=e.target.files[0]; if(!file)return; const reader=new FileReader(); reader.onload=()=>{try{const obj=JSON.parse(reader.result); if(Array.isArray(obj.customChunks)){const seen=new Set(customChunks.map(x=>(x.id||'')+'|'+x.en+'|'+x.ru)); obj.customChunks.forEach(x=>{const key=(x.id||'')+'|'+x.en+'|'+x.ru; if(!seen.has(key)){seen.add(key); customChunks.push(x)}})} if(obj.states&&typeof obj.states==='object')states={...states,...obj.states}; saveJSON('customChunks',customChunks); saveJSON('states',states); render()}catch(err){alert('Не удалось импортировать файл.')}}; reader.readAsText(file)}
 function gameDeck(){return getTopicChunks('games').slice(0,15)}
-function renderSon(){const arr=gameDeck(); const c=arr[gameIndex%arr.length]; $('scoreDad').textContent=scores.dad; $('scoreSan').textContent=scores.san; $('gameCount').textContent=`${gameIndex%arr.length+1} / ${arr.length}`; $('gameType').textContent=c.source; $('gamePrompt').textContent=c.ru; $('gameRu').textContent='Скажи по-английски. Потом открой ответ и получи очко.'; $('gameEn').textContent=c.en; $('gameExamples').innerHTML=c.examples.map(x=>`<div>→ ${escapeHtml(x)}</div>`).join(''); $('gameAnswer').hidden=true}
+function renderSon(){const arr=gameDeck(); const c=arr[gameIndex%arr.length]; $('scoreDad').textContent=scores.dad; $('scoreSan').textContent=scores.tema; $('gameCount').textContent=`${gameIndex%arr.length+1} / ${arr.length}`; $('gameType').textContent=c.source; $('gamePrompt').textContent=c.ru; $('gameRu').textContent='Скажи по-английски. Потом открой ответ и получи очко.'; $('gameEn').textContent=c.en; $('gameExamples').innerHTML=c.examples.map(x=>`<div>→ ${escapeHtml(x)}</div>`).join(''); $('gameAnswer').hidden=true}
 function speak(text){try{window.speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=.88; window.speechSynthesis.speak(u)}catch(e){alert('Озвучка не поддерживается этим браузером.')}}
 function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
 document.addEventListener('DOMContentLoaded',init);
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('./sw.js').catch(function (err) {
+      console.log('Service worker registration failed:', err);
+    });
+  });
+}
 </script>
 </body>
 </html>
