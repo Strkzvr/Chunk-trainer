@@ -46,7 +46,7 @@
 <div class="app">
   <header>
     <div class="brand"><h1>Chunk Trainer</h1><p>Английский через готовые фразы: сегодня — 5 минут, неделя — 15 чанков, закрепление — через свои примеры и повторения.</p></div>
-    <div class="badge">Офлайн · PWA · v3</div>
+    <div class="badge">Офлайн · PWA · v5 · packs</div>
   </header>
   <div class="layout">
     <aside class="panel sidebar">
@@ -100,15 +100,16 @@
         <div class="gameCard"><div class="trainerTop"><span id="gameType">Игра</span><span id="gameCount">1 / 15</span></div><h3 id="gamePrompt">Фраза</h3><p class="ru" id="gameRu"></p><div id="gameAnswer" class="answer" hidden><h3 id="gameEn"></h3><div id="gameExamples" class="examples"></div></div><div class="trainerBtns"><button class="btn primary" id="showGameAnswerBtn">Показать</button><button class="btn ghost" id="speakGameBtn">🔊</button><button class="btn" id="dadPointBtn">+1 Андрей</button><button class="btn" id="sanPointBtn">+1 Тёма</button><button class="btn ghost" id="nextGameBtn">Следующая →</button></div></div>
       </section>
       <section id="settingsView" class="view panel">
-        <div class="sectionTitle"><div><h3>Данные и обновление</h3><p>Здесь резервная копия прогресса, восстановление, обновление PWA и быстрые фильтры.</p></div></div>
+        <div class="sectionTitle"><div><h3>Данные и обновление</h3><p>Здесь резервная копия прогресса, внешняя база чанков, восстановление и обновление PWA.</p></div></div>
         <div class="grid2">
           <div class="task"><h4>Резервная копия</h4><p>Скачай файл с прогрессом, своими чанками, примерами, серией дней и счётом режима с Тёмой.</p><div class="actions"><button class="btn primary" id="backupBtn">Скачать резервную копию</button><label class="btn ghost" style="margin:0">Восстановить<input id="backupImportFile" type="file" accept="application/json" hidden></label></div></div>
           <div class="task"><h4>Обновление приложения</h4><p>Если на iPhone открывается старая версия после GitHub, очисти кэш PWA и перезагрузи приложение.</p><div class="actions"><button class="btn primary" id="updateAppBtn">Обновить приложение</button><button class="btn ghost" id="hardRefreshBtn">Просто перезагрузить</button></div></div>
+          <div class="task"><h4>База чанков</h4><p id="packSummary">Пакеты ещё не проверены.</p><div class="actions"><button class="btn primary" id="refreshPacksBtn">Обновить базу чанков</button><label class="btn ghost" style="margin:0">Импорт JSON-пака<input id="packImportFile" type="file" accept="application/json" hidden></label></div></div>
           <div class="task"><h4>Контроль закрепления</h4><p id="dataSummary"></p><div class="actions"><button class="btn ghost" id="showNoExamplesBtn">Показать чанки без примеров</button><button class="btn ghost" id="showQuickBtn">Быстрый повтор</button></div></div>
           <div class="task"><h4>Опасная зона</h4><p>Полный сброс удалит прогресс и свои чанки только в этом браузере.</p><div class="actions"><button class="btn danger" id="resetAllBtn">Сбросить все данные</button></div></div>
         </div>
       </section>
-      <div class="footer">Файл полностью офлайн: база фраз, свои чанки и прогресс хранятся в localStorage браузера. Для GitHub Pages лучше загружать этот файл как <b>index.html</b>.</div>
+      <div class="footer">Прогресс хранится в localStorage браузера. Базу можно обновлять из папки <b>packs/</b> на GitHub Pages, а свои чанки добавлять вручную или импортом JSON.</div>
     </main>
   </div>
 </div>
@@ -179,6 +180,8 @@ let scores = loadJSON('scores',{dad:0,tema:0});
 scores = {dad:Number(scores.dad)||0, tema:Number(scores.tema ?? scores.san)||0};
 let learningLog = loadJSON('learningLog',{lastDone:null,streak:0,days:{}});
 learningLog = {lastDone:learningLog.lastDone||null, streak:Number(learningLog.streak)||0, days:learningLog.days||{}};
+let externalPacks = loadJSON('externalPacks',{});
+let packsMeta = loadJSON('packsMeta',{lastUpdated:null,catalogVersion:null,errors:[]});
 let trainer = {index:0,flipped:false};
 let gameIndex = 0;
 function $(id){return document.getElementById(id)}
@@ -187,14 +190,23 @@ function loadJSON(name,fallback){try{return JSON.parse(localStorage.getItem(LS_P
 function todayIndex(){return (new Date().getDay()+6)%7}
 function localDateKey(d=new Date()){const y=d.getFullYear(); const m=String(d.getMonth()+1).padStart(2,'0'); const day=String(d.getDate()).padStart(2,'0'); return `${y}-${m}-${day}`}
 function isoToday(offset=0){const d=new Date(); d.setDate(d.getDate()+offset); return localDateKey(d)}
-function topicKeys(){const order=['universal','travel','daily','cafe','smalltalk','school','cars','bbq','games','minecraft','clash']; return order.filter(k=>DATA[k]).concat(Object.keys(DATA).filter(k=>!order.includes(k)))}
+function topicKeys(){const order=['universal','travel','daily','cafe','smalltalk','school','cars','bbq','games','minecraft','clash']; const base=order.filter(k=>DATA[k]).concat(Object.keys(DATA).filter(k=>!order.includes(k))); const packs=Object.keys(externalPacks||{}).filter(k=>!base.includes(k)); return base.concat(packs)}
+function getTopicData(key){return DATA[key] || (externalPacks&&externalPacks[key]) || null}
 function slug(s){return String(s).toLowerCase().replace(/[^a-z0-9а-яё]+/gi,'-').replace(/(^-|-$)/g,'')}
-function normalizeChunk(raw,topic,idx,isCustom=false){return {id: isCustom?raw.id:`${topic}-${idx}-${slug(raw[0]).slice(0,26)}`, topic, en:raw.en||raw[0], ru:raw.ru||raw[1], examples:raw.examples||raw[2]||[], source:raw.source||raw[3]||'стартовая база', custom:!!isCustom}}
+function normalizeChunk(raw,topic,idx,isCustom=false){
+  const en = raw.en || raw[0] || '';
+  const ru = raw.ru || raw[1] || '';
+  const examples = Array.isArray(raw.examples) ? raw.examples : (Array.isArray(raw[2]) ? raw[2] : (raw.example ? [raw.example] : []));
+  const source = raw.source || raw[3] || (externalPacks&&externalPacks[topic] ? 'внешний пакет' : 'стартовая база');
+  const id = isCustom ? raw.id : (raw.id || `${topic}-${idx}-${slug(en).slice(0,42)}`);
+  return {id, topic, en, ru, examples, source, level:raw.level||'', priority:raw.priority||'', custom:!!isCustom}
+}
 function getTopicChunks(topic){
   if(topic==='mixed'){
-    const all=[]; topicKeys().forEach(k=>DATA[k].chunks.forEach((c,i)=>all.push(normalizeChunk(c,k,i)))); return all;
+    const all=[]; topicKeys().forEach(k=>{const td=getTopicData(k); if(td&&Array.isArray(td.chunks)) td.chunks.forEach((c,i)=>all.push(normalizeChunk(c,k,i)))}); return uniqueByText(all);
   }
-  return DATA[topic].chunks.map((c,i)=>normalizeChunk(c,topic,i));
+  const td=getTopicData(topic);
+  return td&&Array.isArray(td.chunks)?td.chunks.map((c,i)=>normalizeChunk(c,topic,i)):[];
 }
 function weeklyBase(){const chunks=getTopicChunks(settings.topic); if(!chunks.length)return[]; const start=((settings.week-1)*15)%chunks.length; const out=[]; for(let i=0;i<15;i++) out.push(chunks[(start+i)%chunks.length]); return out}
 function weeklyCustom(){return customChunks.filter(c=>c.topic===settings.topic && Number(c.week)===Number(settings.week)).map(c=>normalizeChunk(c,settings.topic,0,true))}
@@ -208,9 +220,10 @@ function noExampleChunks(){return weeklyChunks().filter(c=>!(stateOf(c.id).examp
 function quickChunks(){return uniqueById(dueChunks().concat(hardChunks(),currentPlanChunks(),noExampleChunks())).slice(0,12)}
 function deckChunks(){if(settings.deck==='all')return weeklyChunks(); if(settings.deck==='due')return dueChunks(); if(settings.deck==='hard')return hardChunks(); if(settings.deck==='noexamples')return noExampleChunks(); if(settings.deck==='quick')return quickChunks(); return uniqueById(currentPlanChunks().concat(dueChunks()))}
 function uniqueById(arr){const seen=new Set(); return arr.filter(x=>!seen.has(x.id)&&seen.add(x.id))}
+function uniqueByText(arr){const seen=new Set(); return arr.filter(x=>{const key=(x.en+'|'+x.ru).toLowerCase(); return !seen.has(key)&&seen.add(key)})}
 function sanitizeSettings(){const validTopics=topicKeys().concat(['mixed']); if(!validTopics.includes(settings.topic))settings.topic='universal'; settings.weeks=Number(settings.weeks)||4; if(![2,4,6,8,12].includes(settings.weeks))settings.weeks=4; settings.week=Math.min(Math.max(1,Number(settings.week)||1),settings.weeks); if(!['today','week','trainer','custom','son','settings'].includes(settings.view))settings.view='today'; if(!['today','due','all','hard','quick','noexamples'].includes(settings.deck))settings.deck='today'; if(!['games','minecraft','clash'].includes(settings.sonTopic))settings.sonTopic='games';}
-function init(){sanitizeSettings();fillTopics();fillWeeks();bind();render()}
-function fillTopics(){const s=$('topicSelect'); s.innerHTML=''; topicKeys().forEach(k=>{const o=document.createElement('option'); o.value=k; o.textContent=`${DATA[k].emoji} ${DATA[k].title}`; s.appendChild(o)}); const mix=document.createElement('option'); mix.value='mixed'; mix.textContent='🌍 Смешанный набор'; s.appendChild(mix); s.value=settings.topic}
+function init(){sanitizeSettings();fillTopics();fillWeeks();bind();render(); setTimeout(autoLoadPacksIfEmpty,300)}
+function fillTopics(){const s=$('topicSelect'); s.innerHTML=''; topicKeys().forEach(k=>{const td=getTopicData(k); if(!td)return; const o=document.createElement('option'); o.value=k; o.textContent=`${td.emoji||'📦'} ${td.title||k}`; s.appendChild(o)}); const mix=document.createElement('option'); mix.value='mixed'; mix.textContent='🌍 Смешанный набор'; s.appendChild(mix); s.value=settings.topic}
 function fillWeeks(){const s=$('weekSelect'); s.innerHTML=''; for(let i=1;i<=settings.weeks;i++){const o=document.createElement('option'); o.value=i; o.textContent='Неделя '+i; s.appendChild(o)} s.value=settings.week; $('weeksSelect').value=settings.weeks}
 function bind(){
  $('topicSelect').onchange=e=>{settings.topic=e.target.value; settings.week=1; trainer.index=0; persistSettings(); fillWeeks(); render()};
@@ -221,12 +234,12 @@ function bind(){
  $('todayBtn').onclick=()=>{settings.view='today'; persistSettings(); render()}; $('autoDayBtn').onclick=()=>{settings.view='today';settings.deck='today';trainer.index=0;trainer.flipped=false;persistSettings();render()}; $('startTodayBtn').onclick=()=>{settings.view='trainer';settings.deck='today';trainer.index=0;trainer.flipped=false;persistSettings();render()}; $('quickRepeatBtn').onclick=()=>startDeck('quick'); $('noExamplesBtn').onclick=()=>startDeck('noexamples'); $('doneTodayBtn').onclick=()=>{recordPractice(); render()}; $('startAllBtn').onclick=()=>{settings.view='trainer';settings.deck='all';trainer.index=0;trainer.flipped=false;persistSettings();render()}; $('speakDialogueBtn').onclick=()=>speak(dialogueText()); $('dialogueTrainBtn').onclick=()=>startDeck('all');
  $('resetWeekBtn').onclick=resetWeek; $('flipBtn').onclick=()=>{trainer.flipped=!trainer.flipped;renderTrainer()}; $('prevBtn').onclick=()=>moveTrainer(-1); $('nextBtn').onclick=()=>moveTrainer(1); $('repeatBtn').onclick=()=>markCurrent('repeat'); $('hardBtn').onclick=()=>markCurrent('hard'); $('knowBtn').onclick=()=>markCurrent('known'); $('speakTrainerBtn').onclick=()=>{const c=deckChunks()[trainer.index]; if(c)speak(c.en)};
  $('ownExample').oninput=()=>{const c=deckChunks()[trainer.index]; if(c){setState(c.id,{example:$('ownExample').value}); renderStats(false)}};
- $('customForm').onsubmit=addCustom; $('exportBtn').onclick=exportData; $('importFile').onchange=importData; $('clearCustomBtn').onclick=clearCustom; $('backupBtn').onclick=exportData; $('backupImportFile').onchange=importData; $('updateAppBtn').onclick=updateApp; $('hardRefreshBtn').onclick=()=>location.reload(); $('showNoExamplesBtn').onclick=()=>startDeck('noexamples'); $('showQuickBtn').onclick=()=>startDeck('quick'); $('resetAllBtn').onclick=resetAllData;
+ $('customForm').onsubmit=addCustom; $('exportBtn').onclick=exportData; $('importFile').onchange=importData; $('clearCustomBtn').onclick=clearCustom; $('backupBtn').onclick=exportData; $('backupImportFile').onchange=importData; $('refreshPacksBtn').onclick=refreshPacks; $('packImportFile').onchange=importPackFile; $('updateAppBtn').onclick=updateApp; $('hardRefreshBtn').onclick=()=>location.reload(); $('showNoExamplesBtn').onclick=()=>startDeck('noexamples'); $('showQuickBtn').onclick=()=>startDeck('quick'); $('resetAllBtn').onclick=resetAllData;
  $('sonTopicSelect').onchange=e=>{settings.sonTopic=e.target.value; gameIndex=0; persistSettings(); renderSon()}; $('resetScoreBtn').onclick=()=>{scores={dad:0,tema:0}; saveJSON('scores',scores); renderSon()}; $('showGameAnswerBtn').onclick=()=>{$('gameAnswer').hidden=false}; $('speakGameBtn').onclick=()=>{const c=gameDeck()[gameIndex]; if(c)speak(c.en)}; $('dadPointBtn').onclick=()=>{scores.dad++; saveJSON('scores',scores); renderSon()}; $('sanPointBtn').onclick=()=>{scores.tema++; saveJSON('scores',scores); renderSon()}; $('nextGameBtn').onclick=()=>{gameIndex=(gameIndex+1)%gameDeck().length; renderSon()};
 }
 function persistSettings(){saveJSON('settings',settings)}
 function render(){
-  const td=DATA[settings.topic]||{emoji:'🌍',title:'Смешанный набор'}; $('topicTitle').textContent=(settings.topic==='mixed'?'🌍 Смешанный набор':`${td.emoji} ${td.title}`); $('weekTitle').textContent=`Неделя ${settings.week} из ${settings.weeks} · ${weeklyBase().length} базовых + ${weeklyCustom().length} своих`; $('todayBadge').textContent=`Сегодня: ${DAY_PLANS[todayIndex()].name}`;
+  const td=getTopicData(settings.topic)||{emoji:'🌍',title:'Смешанный набор'}; $('topicTitle').textContent=(settings.topic==='mixed'?'🌍 Смешанный набор':`${td.emoji||'📦'} ${td.title}`); $('weekTitle').textContent=`Неделя ${settings.week} из ${settings.weeks} · ${weeklyBase().length} базовых + ${weeklyCustom().length} своих`; $('todayBadge').textContent=`Сегодня: ${DAY_PLANS[todayIndex()].name}`;
   document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===settings.view)); document.querySelectorAll('.view').forEach(v=>v.classList.remove('active')); $(settings.view+'View').classList.add('active');
   renderStats(); if(settings.view==='today')renderToday(); if(settings.view==='week')renderWeek(); if(settings.view==='trainer')renderTrainer(); if(settings.view==='custom')renderCustom(); if(settings.view==='son')renderSon(); if(settings.view==='settings')renderSettings();
 }
@@ -247,8 +260,8 @@ function resetWeek(){if(!confirm('Сбросить статусы и свои п
 function renderCustom(){const arr=weeklyCustom(); $('customHint').innerHTML=arr.length?`В этой теме и неделе своих чанков: <b>${arr.length}</b>`:'Пока нет своих чанков в этой теме и неделе.'; const box=$('customList'); box.innerHTML=''; arr.forEach((c,i)=>{const el=document.createElement('div'); el.className='customItem'; el.innerHTML=`<strong>${escapeHtml(c.en)}</strong><span>${escapeHtml(c.ru)}</span><small>${escapeHtml(c.source)}</small><button class="btn danger small">Удалить</button>`; el.querySelector('button').onclick=()=>{customChunks=customChunks.filter(x=>x.id!==c.id); saveJSON('customChunks',customChunks); render()}; box.appendChild(el)})}
 function addCustom(e){e.preventDefault(); const en=$('customEn').value.trim(),ru=$('customRu').value.trim(); if(!en||!ru)return; customChunks.push({id:'custom-'+Date.now(),topic:settings.topic,week:settings.week,en,ru,examples:$('customEx').value.trim()?[$('customEx').value.trim()]:[],source:$('customSource').value.trim()||'свой источник',createdAt:new Date().toISOString()}); saveJSON('customChunks',customChunks); e.target.reset(); render()}
 function clearCustom(){if(!confirm('Удалить свои чанки из текущей темы и недели?'))return; customChunks=customChunks.filter(c=>!(c.topic===settings.topic&&Number(c.week)===Number(settings.week))); saveJSON('customChunks',customChunks); render()}
-function exportData(){const payload={version:3,settings,states,customChunks,scores,learningLog,exportedAt:new Date().toISOString()}; const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='chunk-trainer-data.json'; a.click(); URL.revokeObjectURL(url)}
-function importData(e){const file=e.target.files[0]; if(!file)return; const reader=new FileReader(); reader.onload=()=>{try{const obj=JSON.parse(reader.result); if(Array.isArray(obj.customChunks)){const seen=new Set(customChunks.map(x=>(x.id||'')+'|'+x.en+'|'+x.ru)); obj.customChunks.forEach(x=>{const key=(x.id||'')+'|'+x.en+'|'+x.ru; if(!seen.has(key)){seen.add(key); customChunks.push(x)}})} if(obj.states&&typeof obj.states==='object')states={...states,...obj.states}; if(obj.scores&&typeof obj.scores==='object'){scores={dad:Number(obj.scores.dad)||0,tema:Number(obj.scores.tema ?? obj.scores.san)||0}; saveJSON('scores',scores)} if(obj.learningLog&&typeof obj.learningLog==='object'){learningLog={lastDone:obj.learningLog.lastDone||null,streak:Number(obj.learningLog.streak)||0,days:obj.learningLog.days||{}}; saveJSON('learningLog',learningLog)} if(obj.settings&&typeof obj.settings==='object'){settings={...settings,...obj.settings}; sanitizeSettings(); persistSettings(); fillTopics(); fillWeeks()} saveJSON('customChunks',customChunks); saveJSON('states',states); render()}catch(err){alert('Не удалось импортировать файл.')}}; reader.readAsText(file)}
+function exportData(){const payload={version:5,settings,states,customChunks,scores,learningLog,externalPacks,packsMeta,exportedAt:new Date().toISOString()}; const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='chunk-trainer-data.json'; a.click(); URL.revokeObjectURL(url)}
+function importData(e){const file=e.target.files[0]; if(!file)return; const reader=new FileReader(); reader.onload=()=>{try{const obj=JSON.parse(reader.result); if(Array.isArray(obj.customChunks)){const seen=new Set(customChunks.map(x=>(x.id||'')+'|'+x.en+'|'+x.ru)); obj.customChunks.forEach(x=>{const key=(x.id||'')+'|'+x.en+'|'+x.ru; if(!seen.has(key)){seen.add(key); customChunks.push(x)}})} if(obj.states&&typeof obj.states==='object')states={...states,...obj.states}; if(obj.scores&&typeof obj.scores==='object'){scores={dad:Number(obj.scores.dad)||0,tema:Number(obj.scores.tema ?? obj.scores.san)||0}; saveJSON('scores',scores)} if(obj.learningLog&&typeof obj.learningLog==='object'){learningLog={lastDone:obj.learningLog.lastDone||null,streak:Number(obj.learningLog.streak)||0,days:obj.learningLog.days||{}}; saveJSON('learningLog',learningLog)} if(obj.externalPacks&&typeof obj.externalPacks==='object'){externalPacks={...externalPacks,...obj.externalPacks}; saveJSON('externalPacks',externalPacks)} if(obj.packsMeta&&typeof obj.packsMeta==='object'){packsMeta={...packsMeta,...obj.packsMeta}; saveJSON('packsMeta',packsMeta)} if(obj.settings&&typeof obj.settings==='object'){settings={...settings,...obj.settings}; sanitizeSettings(); persistSettings(); fillTopics(); fillWeeks()} saveJSON('customChunks',customChunks); saveJSON('states',states); render()}catch(err){alert('Не удалось импортировать файл.')}}; reader.readAsText(file)}
 function gameDeck(){return getTopicChunks(settings.sonTopic||'games').slice(0,15)}
 function renderSon(){const arr=gameDeck(); const c=arr[gameIndex%arr.length]; $('sonTopicSelect').value=settings.sonTopic||'games'; $('scoreDad').textContent=scores.dad; $('scoreSan').textContent=scores.tema; $('gameCount').textContent=`${gameIndex%arr.length+1} / ${arr.length}`; $('gameType').textContent=c.source; $('gamePrompt').textContent=c.ru; $('gameRu').textContent='Скажи по-английски. Потом открой ответ и получи очко.'; $('gameEn').textContent=c.en; $('gameExamples').innerHTML=c.examples.map(x=>`<div>→ ${escapeHtml(x)}</div>`).join(''); $('gameAnswer').hidden=true}
 
@@ -256,7 +269,72 @@ function startDeck(deck){settings.view='trainer'; settings.deck=deck; trainer.in
 function todayDone(){return learningLog.lastDone===isoToday()}
 function recordPractice(){const today=isoToday(); if(learningLog.lastDone!==today){learningLog.streak = learningLog.lastDone===isoToday(-1) ? (Number(learningLog.streak)||0)+1 : 1; learningLog.lastDone=today} learningLog.days=learningLog.days||{}; learningLog.days[today]=(Number(learningLog.days[today])||0)+1; saveJSON('learningLog',learningLog)}
 function dialogueText(){const arr=weeklyChunks().slice(0,5); if(!arr.length)return 'Пока нет фраз для диалога.'; const lines=['Мини-диалог из чанков недели:']; arr.forEach((c,i)=>{lines.push(`${i+1}. ${c.en} — ${c.ru}`)}); lines.push('Задание: скажи эти 5 фраз вслух и придумай одну ситуацию из своей жизни.'); return lines.join('\n')}
-function renderSettings(){const total=weeklyChunks().length; const known=weeklyChunks().filter(c=>stateOf(c.id).status==='known').length; const without=noExampleChunks().length; const due=dueChunks().length; $('dataSummary').innerHTML=`Неделя: <b>${known}/${total}</b> знаю. Без своих примеров: <b>${without}</b>. На повтор сегодня: <b>${due}</b>. Серия: <b>${learningLog.streak||0}</b> дн. Последняя практика: <b>${learningLog.lastDone||'ещё не было'}</b>.`}
+function renderSettings(){const total=weeklyChunks().length; const known=weeklyChunks().filter(c=>stateOf(c.id).status==='known').length; const without=noExampleChunks().length; const due=dueChunks().length; $('dataSummary').innerHTML=`Неделя: <b>${known}/${total}</b> знаю. Без своих примеров: <b>${without}</b>. На повтор сегодня: <b>${due}</b>. Серия: <b>${learningLog.streak||0}</b> дн. Последняя практика: <b>${learningLog.lastDone||'ещё не было'}</b>.`; renderPackSummary()}
+
+function autoLoadPacksIfEmpty(){try{if(Object.keys(externalPacks||{}).length) return; if(typeof location!=='undefined' && location.protocol==='file:') return; refreshPacks(true)}catch(e){}}
+function renderPackSummary(){
+  const el=$('packSummary'); if(!el) return;
+  const packIds=Object.keys(externalPacks||{});
+  const packCount=packIds.length;
+  const chunkCount=packIds.reduce((sum,id)=>sum+((externalPacks[id].chunks||[]).length),0);
+  const last=packsMeta.lastUpdated||'ещё не обновлялась';
+  const err=(packsMeta.errors&&packsMeta.errors.length)?` Ошибки: ${packsMeta.errors.join('; ')}`:'';
+  el.innerHTML=`Внешних пакетов: <b>${packCount}</b>. Чанков из пакетов: <b>${chunkCount}</b>. Последнее обновление: <b>${last}</b>.${err}<br><span style="color:var(--muted)">Файлы берутся из <b>./packs/catalog.json</b> и JSON-паков рядом с ним.</span>`;
+}
+function normalizePack(pack,fallbackId){
+  if(!pack || typeof pack!=='object') throw new Error('Неверный формат пакета');
+  const id=pack.id||fallbackId||('pack-'+Date.now());
+  const rawChunks=Array.isArray(pack.chunks)?pack.chunks:[];
+  if(!rawChunks.length) throw new Error('В пакете нет chunks');
+  const seen=new Set();
+  const chunks=[];
+  rawChunks.forEach((raw,i)=>{
+    const c=normalizeChunk(raw,id,i,false);
+    if(!c.en||!c.ru) return;
+    const key=(c.en+'|'+c.ru).toLowerCase();
+    if(seen.has(key)) return;
+    seen.add(key);
+    chunks.push({id:raw.id||`${id}-${i}-${slug(c.en).slice(0,42)}`, en:c.en, ru:c.ru, examples:c.examples, source:c.source||pack.title||'пакет чанков', level:c.level||raw.level||'', priority:c.priority||raw.priority||''});
+  });
+  return {title:pack.title||id, emoji:pack.emoji||'📦', description:pack.description||'', version:pack.version||1, external:true, chunks};
+}
+function savePacks(){saveJSON('externalPacks',externalPacks); saveJSON('packsMeta',packsMeta)}
+async function refreshPacks(silent=false){
+  const status=$('packSummary'); if(status && !silent) status.innerHTML='Загружаю catalog.json из папки packs/...';
+  const errors=[]; const loaded={};
+  try{
+    const catalogResp=await fetch('./packs/catalog.json?v='+Date.now(),{cache:'no-store'});
+    if(!catalogResp.ok) throw new Error('catalog.json: HTTP '+catalogResp.status);
+    const catalog=await catalogResp.json();
+    const list=Array.isArray(catalog.packs)?catalog.packs:[];
+    if(!list.length) throw new Error('В catalog.json нет списка packs');
+    for(const item of list){
+      try{
+        const file=item.file || (item.id+'.json');
+        const resp=await fetch('./packs/'+file+'?v='+Date.now(),{cache:'no-store'});
+        if(!resp.ok) throw new Error(file+': HTTP '+resp.status);
+        const pack=await resp.json();
+        const id=pack.id||item.id||('pack-'+file.replace(/\.json$/,''));
+        loaded[id]=normalizePack({...item,...pack,id},id);
+      }catch(e){errors.push((item.title||item.id||item.file)+': '+e.message)}
+    }
+    externalPacks={...externalPacks,...loaded};
+    packsMeta={lastUpdated:new Date().toLocaleString('ru-RU'), catalogVersion:catalog.version||null, errors};
+    savePacks();
+    fillTopics(); sanitizeSettings(); fillWeeks(); render(); renderPackSummary();
+    if(!silent) alert(`База обновлена. Загружено пакетов: ${Object.keys(loaded).length}. Ошибок: ${errors.length}.`);
+  }catch(e){
+    packsMeta={...packsMeta, errors:[e.message]}; savePacks(); renderPackSummary();
+    if(!silent) alert('Не удалось обновить базу чанков: '+e.message+'\nПроверь, что в GitHub есть папка packs и файл catalog.json.');
+  }
+}
+function importPackFile(e){
+  const file=e.target.files[0]; if(!file)return;
+  const reader=new FileReader();
+  reader.onload=()=>{try{const obj=JSON.parse(reader.result); const id=obj.id||('pack-'+slug(file.name.replace(/\.json$/,''))); externalPacks[id]=normalizePack({...obj,id},id); packsMeta={lastUpdated:new Date().toLocaleString('ru-RU'), catalogVersion:packsMeta.catalogVersion||null, errors:[]}; savePacks(); fillTopics(); sanitizeSettings(); fillWeeks(); render(); renderPackSummary(); alert('Пакет импортирован: '+(externalPacks[id].title||id));}catch(err){alert('Не удалось импортировать пакет: '+err.message)}};
+  reader.readAsText(file);
+}
+
 async function updateApp(){try{if('serviceWorker' in navigator){const regs=await navigator.serviceWorker.getRegistrations(); await Promise.all(regs.map(r=>r.update().catch(()=>null))); await Promise.all(regs.map(r=>r.unregister().catch(()=>null)))} if(window.caches){const keys=await caches.keys(); await Promise.all(keys.map(k=>caches.delete(k)))} alert('Кэш очищен. Сейчас приложение перезагрузится и подтянет новую версию.')}catch(e){alert('Не удалось полностью очистить кэш, но страницу перезагрузим.')} location.reload()}
 function resetAllData(){if(!confirm('Точно удалить весь прогресс, свои чанки и счёт в этом браузере? Сначала лучше скачать резервную копию.'))return; Object.keys(localStorage).filter(k=>k.startsWith(LS_PREFIX+'.')).forEach(k=>localStorage.removeItem(k)); location.reload()}
 
