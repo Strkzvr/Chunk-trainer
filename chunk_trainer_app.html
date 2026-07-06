@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chunk Trainer — английский по чанкам</title>
+  <style>
+    :root {
+      --bg:#101513; --panel:#18201d; --panel2:#202a26; --text:#f3f5ef; --muted:#aab5ad; --line:#33413a;
+      --accent:#84d66b; --accent2:#d6f56b; --danger:#ff8c7a; --shadow: 0 18px 50px rgba(0,0,0,.35);
+      --radius:22px;
+    }
+    * {box-sizing:border-box}
+    body { margin:0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background: radial-gradient(circle at top left, #233429 0, #101513 45%, #0b0f0d 100%); color:var(--text); }
+    .app { max-width:1180px; margin:0 auto; padding:22px; }
+    header { display:flex; gap:18px; justify-content:space-between; align-items:flex-start; margin-bottom:18px; }
+    .brand h1 {font-size:32px; margin:0 0 8px; letter-spacing:-.04em}
+    .brand p {margin:0; color:var(--muted); line-height:1.45; max-width:760px}
+    .badge {background:rgba(132,214,107,.12); color:var(--accent2); border:1px solid rgba(132,214,107,.35); padding:8px 12px; border-radius:999px; white-space:nowrap; font-size:14px}
+    .layout { display:grid; grid-template-columns: 330px 1fr; gap:18px; align-items:start; }
+    .panel { background:linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.015)); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); }
+    .controls { padding:18px; position:sticky; top:14px; }
+    label { display:block; color:var(--muted); font-size:13px; margin:14px 0 7px; }
+    select, input, textarea { width:100%; border:1px solid var(--line); background:#111815; color:var(--text); border-radius:14px; padding:12px 13px; font-size:15px; outline:none; }
+    textarea { min-height:90px; resize:vertical; }
+    select:focus, input:focus, textarea:focus {border-color:var(--accent)}
+    .statGrid {display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:16px 0}
+    .stat {background:var(--panel2); padding:12px; border-radius:16px; border:1px solid var(--line)}
+    .stat b {display:block; font-size:22px; margin-bottom:2px}
+    .stat span {font-size:12px; color:var(--muted)}
+    .progress {height:10px; background:#0c110f; border-radius:999px; overflow:hidden; border:1px solid var(--line)}
+    .progress > div {height:100%; width:0; background:linear-gradient(90deg,var(--accent),var(--accent2)); transition:.25s}
+    .tabs { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:16px; }
+    button { cursor:pointer; border:none; border-radius:14px; padding:11px 13px; color:var(--text); background:var(--panel2); font-weight:700; }
+    button.active, .primary {background:linear-gradient(135deg,#5bbd50,#bce75a); color:#0e130f}
+    button.ghost {background:transparent; border:1px solid var(--line); color:var(--text)}
+    button.small {padding:8px 10px; border-radius:11px; font-size:13px}
+    .main { display:flex; flex-direction:column; gap:18px; }
+    .hero { padding:20px; display:grid; grid-template-columns:1fr auto; gap:16px; align-items:center; }
+    .hero h2 {margin:0 0 6px; font-size:26px; letter-spacing:-.03em}
+    .hero p {margin:0; color:var(--muted)}
+    .dayBox { padding:18px; }
+    .dayBox h3 {margin:0 0 7px}
+    .dayBox p {margin:0 0 12px; color:var(--muted); line-height:1.45}
+    .miniChips {display:flex; flex-wrap:wrap; gap:8px}
+    .miniChip {font-size:12px; color:#dce8df; background:#121916; border:1px solid var(--line); padding:7px 9px; border-radius:999px}
+    .cards {display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:14px;}
+    .card {padding:18px; background:var(--panel); border:1px solid var(--line); border-radius:20px; transition:.2s;}
+    .card.known {border-color:rgba(132,214,107,.65); box-shadow:0 0 0 1px rgba(132,214,107,.15) inset}
+    .cardTop {display:flex; justify-content:space-between; gap:10px; align-items:center; margin-bottom:8px}
+    .num {display:inline-grid; place-items:center; width:30px; height:30px; border-radius:50%; background:#0d130f; border:1px solid var(--line); color:var(--accent2); font-weight:800}
+    .source {font-size:12px; color:var(--muted); text-align:right}
+    .card h3 {font-size:22px; margin:8px 0 8px; letter-spacing:-.02em}
+    .ru {font-size:16px; margin:0 0 12px; color:#dfe6df}
+    .examples {display:grid; gap:6px; color:var(--muted); font-size:14px; line-height:1.35; margin-bottom:14px}
+    .actions {display:flex; gap:8px; justify-content:flex-end}
+    .practice {padding:22px;}
+    .practiceCard {background:var(--panel); border:1px solid var(--line); border-radius:22px; padding:22px;}
+    .practiceTop {display:flex; justify-content:space-between; color:var(--muted); font-size:14px; margin-bottom:16px}
+    .practiceRu {font-size:28px; line-height:1.2; letter-spacing:-.035em; margin:0 0 18px}
+    .answerBox {background:#0e1411; border:1px solid var(--line); border-radius:18px; padding:16px; margin:12px 0}
+    .answerBox h3 {margin:0 0 8px; font-size:26px; color:var(--accent2)}
+    .practiceBtns {display:flex; flex-wrap:wrap; gap:10px; margin-top:14px}
+    .customGrid {display:grid; grid-template-columns:1fr 1fr; gap:14px; padding:18px}
+    .customItem {display:grid; grid-template-columns:1fr auto; gap:4px 12px; align-items:center; padding:13px; background:var(--panel); border:1px solid var(--line); border-radius:16px; margin-bottom:10px}
+    .customItem span, .customItem small {color:var(--muted)}
+    .customItem button {grid-row:1/4; grid-column:2}
+    .note {font-size:13px; color:var(--muted); line-height:1.45; background:#0e1411; border:1px solid var(--line); border-radius:16px; padding:13px; margin-top:14px}
+    .footerNote {color:var(--muted); font-size:13px; line-height:1.45; padding:14px 4px 0}
+    [hidden] {display:none !important}
+    @media (max-width: 900px) {
+      .app {padding:14px}
+      header {display:block}
+      .badge {display:inline-block; margin-top:14px}
+      .layout {grid-template-columns:1fr}
+      .controls {position:static}
+      .cards {grid-template-columns:1fr}
+      .hero {grid-template-columns:1fr}
+      .customGrid {grid-template-columns:1fr}
+      .brand h1 {font-size:28px}
+      .practiceRu {font-size:24px}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="brand">
+        <h1>Chunk Trainer</h1>
+        <p>Мини‑приложение для английского по чанкам: выбираешь тему, срок, неделю — получаешь 15 фраз, план на 7 дней и тренировку через свои примеры.</p>
+      </div>
+      <div class="badge">Офлайн · прогресс хранится в браузере</div>
+    </header>
+
+    <div class="layout">
+      <aside class="panel controls">
+        <label for="topicSelect">Тема</label>
+        <select id="topicSelect"></select>
+
+        <label for="weeksSelect">Срок обучения</label>
+        <select id="weeksSelect">
+          <option value="2">2 недели</option>
+          <option value="4">4 недели</option>
+          <option value="6">6 недель</option>
+          <option value="8">8 недель</option>
+          <option value="12">12 недель</option>
+        </select>
+
+        <label for="weekSelect">Неделя</label>
+        <select id="weekSelect"></select>
+
+        <label for="daySelect">День недели / режим плана</label>
+        <select id="daySelect">
+          <option value="0">Понедельник</option>
+          <option value="1">Вторник</option>
+          <option value="2">Среда</option>
+          <option value="3">Четверг</option>
+          <option value="4">Пятница</option>
+          <option value="5">Суббота</option>
+          <option value="6">Воскресенье</option>
+        </select>
+
+        <div class="statGrid">
+          <div class="stat"><b id="statChunks">15</b><span>чанков</span></div>
+          <div class="stat"><b id="statKnown">0</b><span>знаю</span></div>
+          <div class="stat"><b id="statLeft">15</b><span>осталось</span></div>
+        </div>
+        <div class="progress"><div id="progressBar"></div></div>
+
+        <div class="tabs">
+          <button data-mode="study">Учить</button>
+          <button data-mode="practice">Тренировка</button>
+          <button data-mode="custom">Мои чанки</button>
+        </div>
+
+        <button id="resetProgressBtn" class="ghost" style="width:100%;margin-top:12px">Сбросить прогресс недели</button>
+        <div class="note"><b>Откуда брать чанки:</b><br>стартовая база уже внутри приложения. Свои добавляй из словарей с примерами, YouTube/сериалов, YouGlish, учебников, переписок и реальных ситуаций. Главное — сохранять не одно слово, а готовый кусок речи + свой пример.</div>
+      </aside>
+
+      <main class="main">
+        <section class="panel hero">
+          <div>
+            <h2 id="topicTitle">Тема</h2>
+            <p id="weekTitle">Неделя</p>
+          </div>
+          <div class="badge">15 чанков = 5–10 минут в день</div>
+        </section>
+
+        <section class="panel dayBox">
+          <h3 id="dayPlanTitle">План дня</h3>
+          <p id="dayPlanDetail"></p>
+          <div id="dayChunks" class="miniChips"></div>
+        </section>
+
+        <section id="studyView">
+          <div id="cards" class="cards"></div>
+        </section>
+
+        <section id="practiceView" class="panel practice" hidden>
+          <div class="practiceCard">
+            <div class="practiceTop"><span>Проверь себя по русской подсказке</span><span id="practiceCount"></span></div>
+            <h2 id="practiceRu" class="practiceRu"></h2>
+            <button id="showAnswerBtn" class="primary">Показать английский</button>
+            <div id="practiceAnswerBox" class="answerBox" hidden>
+              <h3 id="practiceAnswer"></h3>
+              <div id="practiceExamples" class="examples"></div>
+            </div>
+            <label for="ownExample">Свой пример с этим чанком</label>
+            <textarea id="ownExample" placeholder="Например: I need to check the dimensions."></textarea>
+            <div class="practiceBtns">
+              <button id="saveExampleBtn" class="ghost">Сохранить пример</button>
+              <button id="knowPracticeBtn" class="primary">Знаю, дальше</button>
+              <button id="againPracticeBtn" class="ghost">Повторить позже</button>
+              <button id="prevPracticeBtn" class="ghost">Назад</button>
+              <button id="nextPracticeBtn" class="ghost">Дальше</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="customView" class="panel" hidden>
+          <div class="customGrid">
+            <form id="addChunkForm">
+              <h3>Добавить свой чанк в текущую тему и неделю</h3>
+              <label for="customEn">Английский чанк</label>
+              <input id="customEn" placeholder="I'm looking for..." />
+              <label for="customRu">Перевод / смысл</label>
+              <input id="customRu" placeholder="Я ищу..." />
+              <label for="customExample">Свой пример</label>
+              <input id="customExample" placeholder="I'm looking for a good school." />
+              <label for="customSource">Источник</label>
+              <input id="customSource" placeholder="YouTube, Cambridge, разговор, сериал..." />
+              <button class="primary" style="width:100%;margin-top:14px">Добавить</button>
+            </form>
+            <div>
+              <h3>Мои чанки</h3>
+              <p id="customHint" class="footerNote"></p>
+              <div id="customList"></div>
+              <div class="practiceBtns">
+                <button id="exportBtn" class="ghost">Экспорт JSON</button>
+                <label class="ghost" style="display:inline-block; margin:0; padding:11px 13px; border-radius:14px; cursor:pointer">Импорт JSON<input id="importFile" type="file" accept="application/json" hidden></label>
+                <button id="clearCustomBtn" class="ghost">Очистить эту неделю</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="footerNote">Система недели: не просто прочитать фразу, а 1) понять смысл, 2) проговорить, 3) сделать свой пример, 4) вернуться к ней через день, 5) найти похожую фразу в живом контенте.</div>
+      </main>
+    </div>
+  </div>
+  <script>
+
+const DATA = {"universal": {"title": "Базовые речевые шаблоны", "emoji": "🧩", "chunks": [["I need to...", "Мне нужно...", ["I need to call you later.", "I need to check the address."], "каркас фразы"], ["I want to...", "Я хочу...", ["I want to improve my English.", "I want to try this option."], "каркас фразы"], ["I'm going to...", "Я собираюсь...", ["I'm going to ask a question.", "I'm going to book a room."], "будущее действие"], ["I have to...", "Мне приходится / я должен...", ["I have to work today.", "I have to leave early."], "обязанность"], ["Could you...?", "Вы могли бы...?", ["Could you help me?", "Could you say that again?"], "вежливая просьба"], ["Can I have...?", "Можно мне...?", ["Can I have a receipt?", "Can I have a glass of water?"], "просьба"], ["I'm looking for...", "Я ищу...", ["I'm looking for the entrance.", "I'm looking for a good option."], "ситуационный шаблон"], ["I'm interested in...", "Мне интересно / меня интересует...", ["I'm interested in this course.", "I'm interested in outdoor kitchens."], "интерес"], ["It depends on...", "Это зависит от...", ["It depends on the price.", "It depends on how much time we have."], "связка"], ["The main problem is...", "Главная проблема в том, что...", ["The main problem is the timing.", "The main problem is the delivery date."], "объяснение"], ["The difference is...", "Разница в том, что...", ["The difference is the size.", "The difference is how it works."], "сравнение"], ["As far as I know...", "Насколько я знаю...", ["As far as I know, it's open today.", "As far as I know, he lives in Washington."], "ограничение уверенности"], ["To be honest...", "Честно говоря...", ["To be honest, I don't know.", "To be honest, I prefer this one."], "мягкое мнение"], ["The thing is...", "Дело в том, что...", ["The thing is, I don't have much time.", "The thing is, we need to decide today."], "объяснение"], ["That works for me.", "Мне подходит.", ["Tuesday works for me.", "This option works for me."], "готовая фраза"], ["That doesn't work for me.", "Мне не подходит.", ["Tomorrow doesn't work for me.", "This time doesn't work for me."], "готовая фраза"], ["I have a question about...", "У меня вопрос по поводу...", ["I have a question about the price.", "I have a question about the schedule."], "начать вопрос"], ["Could you explain...?", "Вы могли бы объяснить...?", ["Could you explain how it works?", "Could you explain the difference?"], "уточнение"], ["What do you mean by...?", "Что вы имеете в виду под...?", ["What do you mean by 'standard'?", "What do you mean by 'soon'?"], "уточнение"], ["Let me check.", "Дайте проверю.", ["Let me check the price.", "Let me check my calendar."], "пауза в разговоре"], ["I'll get back to you.", "Я вернусь с ответом / напишу позже.", ["I'll get back to you tomorrow.", "I'll get back to you with the details."], "рабочая фраза"], ["I'm not sure yet.", "Я пока не уверен.", ["I'm not sure yet, but I like it.", "I'm not sure yet about the date."], "мягкая неопределенность"], ["I agree with you.", "Я с вами согласен.", ["I agree with you on this point.", "I agree with you, it's important."], "согласие"], ["I don't agree with that.", "Я с этим не согласен.", ["I don't agree with that idea.", "I don't agree with that price."], "несогласие"], ["In my opinion...", "По моему мнению...", ["In my opinion, it's too expensive.", "In my opinion, this is the best option."], "мнение"], ["For example...", "Например...", ["For example, we can start with this.", "For example, you can use this phrase."], "пример"], ["At the moment...", "На данный момент...", ["At the moment, I don't know.", "At the moment, we have two options."], "ситуация сейчас"], ["I used to...", "Раньше я...", ["I used to play football.", "I used to ride a motorcycle."], "прошлая привычка"], ["I'm trying to...", "Я пытаюсь...", ["I'm trying to speak more.", "I'm trying to understand the system."], "процесс"], ["I don't mind.", "Я не против.", ["I don't mind waiting.", "I don't mind this option."], "нейтральное согласие"], ["It makes sense.", "Это логично / имеет смысл.", ["Yes, it makes sense.", "This plan makes sense to me."], "оценка идеи"], ["It doesn't make sense.", "Это нелогично / не имеет смысла.", ["This rule doesn't make sense.", "It doesn't make sense to do it now."], "оценка идеи"], ["I need more time.", "Мне нужно больше времени.", ["I need more time to think.", "I need more time to decide."], "пауза"], ["Could we...?", "Могли бы мы...?", ["Could we discuss it later?", "Could we change the date?"], "предложение"], ["Let's start with...", "Давайте начнём с...", ["Let's start with the basics.", "Let's start with the first option."], "структура"], ["First of all...", "Прежде всего...", ["First of all, we need a plan.", "First of all, let's check the date."], "структура"], ["The next step is...", "Следующий шаг — ...", ["The next step is to practice.", "The next step is to send the file."], "план"], ["I noticed that...", "Я заметил, что...", ["I noticed that it works better.", "I noticed that this phrase is useful."], "наблюдение"], ["What if we...?", "А что если мы...?", ["What if we try another way?", "What if we start tomorrow?"], "идея"], ["I would rather...", "Я бы скорее...", ["I would rather stay here.", "I would rather choose this one."], "предпочтение"], ["I'm used to...", "Я привык к...", ["I'm used to this schedule.", "I'm used to working with clients."], "привычка"], ["I'm not used to...", "Я не привык к...", ["I'm not used to speaking English.", "I'm not used to this format."], "непривычно"], ["It's hard for me to...", "Мне сложно...", ["It's hard for me to explain it in English.", "It's hard for me to remember names."], "сложность"], ["It's easier to...", "Проще...", ["It's easier to learn phrases.", "It's easier to start with examples."], "сравнение"], ["What matters is...", "Важно то, что...", ["What matters is regular practice.", "What matters is the result."], "акцент"]]}, "travel": {"title": "Поездки и заграница", "emoji": "✈️", "chunks": [["I'd like to book...", "Я бы хотел забронировать...", ["I'd like to book a room.", "I'd like to book two tickets."], "поездка"], ["I have a reservation.", "У меня бронь.", ["I have a reservation under Zarapin.", "I have a reservation for two nights."], "отель"], ["Where can I find...?", "Где я могу найти...?", ["Where can I find a taxi?", "Where can I find the check-in desk?"], "ориентирование"], ["I need to get to...", "Мне нужно добраться до...", ["I need to get to the airport.", "I need to get to the city center."], "транспорт"], ["Is it far from here?", "Это далеко отсюда?", ["Is it far from here by taxi?", "Is it far from here on foot?"], "ориентирование"], ["How long does it take?", "Сколько это занимает времени?", ["How long does it take by train?", "How long does it take to get there?"], "время"], ["Which platform is it?", "Какая это платформа?", ["Which platform is it for Rome?", "Which platform is the train to Milan?"], "поезд"], ["I missed my train.", "Я опоздал на поезд.", ["I missed my train. What can I do?", "I missed my train because of traffic."], "проблема"], ["Could you show me on the map?", "Можете показать на карте?", ["Could you show me on the map, please?", "Could you show me where we are?"], "ориентирование"], ["Do I need a ticket?", "Мне нужен билет?", ["Do I need a ticket for my son?", "Do I need a separate ticket?"], "билеты"], ["Can I pay by card?", "Можно оплатить картой?", ["Can I pay by card here?", "Can I pay by card on the bus?"], "оплата"], ["Could you call a taxi?", "Можете вызвать такси?", ["Could you call a taxi for us?", "Could you call a taxi to the hotel?"], "такси"], ["Is breakfast included?", "Завтрак включён?", ["Is breakfast included in the price?", "Is breakfast included for children?"], "отель"], ["What time is check-out?", "Во сколько выезд?", ["What time is check-out tomorrow?", "What time is check-out on Sunday?"], "отель"], ["Could we check in early?", "Можем заселиться раньше?", ["Could we check in early today?", "Could we check in early if the room is ready?"], "отель"], ["I need a room for...", "Мне нужен номер на...", ["I need a room for two adults and one child.", "I need a room for three nights."], "отель"], ["Our flight was delayed.", "Наш рейс задержали.", ["Our flight was delayed by two hours.", "Our flight was delayed, so we arrived late."], "аэропорт"], ["Where is the baggage claim?", "Где выдача багажа?", ["Where is the baggage claim area?", "Where is the baggage claim for this flight?"], "аэропорт"], ["My luggage is missing.", "Мой багаж пропал.", ["My luggage is missing. Can you help me?", "My luggage is missing after the flight."], "аэропорт"], ["Do you have Wi‑Fi?", "У вас есть Wi‑Fi?", ["Do you have Wi‑Fi in the room?", "Do you have free Wi‑Fi?"], "отель"], ["Can we leave our bags here?", "Можно оставить сумки здесь?", ["Can we leave our bags here until check-in?", "Can we leave our bags here for an hour?"], "отель"], ["I'm here on vacation.", "Я здесь в отпуске.", ["I'm here on vacation with my family.", "I'm here on vacation for a week."], "small talk"], ["We're staying near...", "Мы остановились рядом с...", ["We're staying near the city center.", "We're staying near the beach."], "разговор"], ["Could you recommend...?", "Можете посоветовать...?", ["Could you recommend a good restaurant?", "Could you recommend a place for kids?"], "совет"], ["Is there a pharmacy nearby?", "Поблизости есть аптека?", ["Is there a pharmacy nearby?", "Is there a supermarket nearby?"], "город"], ["How do I get there?", "Как туда добраться?", ["How do I get there from here?", "How do I get there by metro?"], "маршрут"], ["Do I need to change trains?", "Мне нужно пересаживаться?", ["Do I need to change trains in Milan?", "Do I need to change buses?"], "транспорт"], ["Can I have a window seat?", "Можно место у окна?", ["Can I have a window seat, please?", "Can I have seats together?"], "самолет"], ["We need two seats together.", "Нам нужны два места рядом.", ["We need two seats together with our son.", "We need three seats together."], "самолет"], ["I'm a little lost.", "Я немного заблудился.", ["I'm a little lost. Could you help me?", "I'm a little lost in the station."], "ориентирование"], ["Is this the right way to...?", "Это правильный путь к...?", ["Is this the right way to the museum?", "Is this the right way to the metro?"], "ориентирование"], ["Could you speak more slowly?", "Можете говорить медленнее?", ["Could you speak more slowly, please?", "Could you speak more slowly? I'm learning English."], "понимание"], ["I don't speak English very well.", "Я не очень хорошо говорю по-английски.", ["I don't speak English very well, but I understand a little.", "I don't speak English very well yet."], "страховочная фраза"], ["Could you write it down?", "Можете это записать?", ["Could you write the address down?", "Could you write the price down?"], "понимание"], ["We are traveling with a child.", "Мы путешествуем с ребёнком.", ["We are traveling with a child, so we need a quiet room.", "We are traveling with a child for the first time."], "семья"], ["Is it safe to walk here?", "Здесь безопасно гулять?", ["Is it safe to walk here at night?", "Is it safe to walk here with kids?"], "безопасность"], ["Where can we buy tickets?", "Где мы можем купить билеты?", ["Where can we buy tickets for the museum?", "Where can we buy metro tickets?"], "билеты"], ["Is there a discount for children?", "Есть скидка для детей?", ["Is there a discount for children under 14?", "Is there a family discount?"], "семья"], ["We'd like a table for three.", "Нам столик на троих.", ["We'd like a table for three, please.", "We'd like a table outside."], "ресторан"], ["Could we have the bill, please?", "Можно счёт, пожалуйста?", ["Could we have the bill, please?", "Could we have separate bills?"], "ресторан"], ["Is service included?", "Сервис включён?", ["Is service included in the bill?", "Is service included here?"], "ресторан"], ["We have a problem with the room.", "У нас проблема с номером.", ["We have a problem with the room: the air conditioner doesn't work.", "We have a problem with the room key."], "отель"], ["The air conditioner doesn't work.", "Кондиционер не работает.", ["The air conditioner doesn't work in our room.", "The air conditioner is too noisy."], "отель"], ["Could someone fix it?", "Кто-нибудь может это починить?", ["Could someone fix it today?", "Could someone fix the shower?"], "проблема"], ["Can we change the room?", "Мы можем поменять номер?", ["Can we change the room because it's too noisy?", "Can we change the room today?"], "отель"]]}, "daily": {"title": "Быт и город", "emoji": "🏙️", "chunks": [["I need to buy...", "Мне нужно купить...", ["I need to buy some water.", "I need to buy a charger."], "быт"], ["I'm going to the...", "Я иду/еду в...", ["I'm going to the supermarket.", "I'm going to the pharmacy."], "быт"], ["Do you know where...?", "Вы знаете, где...?", ["Do you know where the nearest ATM is?", "Do you know where the entrance is?"], "город"], ["Is it open today?", "Это сегодня открыто?", ["Is the shop open today?", "Is the office open today?"], "время"], ["What time does it open?", "Во сколько открывается?", ["What time does the shop open?", "What time does the gym open?"], "расписание"], ["What time does it close?", "Во сколько закрывается?", ["What time does the pharmacy close?", "What time does the supermarket close?"], "расписание"], ["I need a receipt.", "Мне нужен чек.", ["I need a receipt, please.", "I need a receipt for this purchase."], "покупки"], ["Can I return this?", "Можно это вернуть?", ["Can I return this if it doesn't fit?", "Can I return this tomorrow?"], "магазин"], ["It doesn't work.", "Это не работает.", ["This charger doesn't work.", "The code doesn't work."], "проблема"], ["It's too expensive.", "Это слишком дорого.", ["It's too expensive for me.", "It's too expensive compared to this one."], "покупки"], ["Do you have something cheaper?", "У вас есть что-то дешевле?", ["Do you have something cheaper but good?", "Do you have a cheaper option?"], "покупки"], ["Do you have it in another size?", "У вас есть другой размер?", ["Do you have it in a larger size?", "Do you have it in size M?"], "одежда"], ["I'm just looking.", "Я просто смотрю.", ["Thanks, I'm just looking.", "I'm just looking for now."], "магазин"], ["I'll think about it.", "Я подумаю.", ["I'll think about it and come back.", "I'll think about it before I decide."], "решение"], ["I need help with...", "Мне нужна помощь с...", ["I need help with the machine.", "I need help with the form."], "помощь"], ["Where should I put this?", "Куда это поставить?", ["Where should I put this bag?", "Where should I put the car?"], "быт"], ["Could you open the door?", "Можете открыть дверь?", ["Could you open the door for me?", "Could you open the gate?"], "просьба"], ["Could you close the window?", "Можете закрыть окно?", ["Could you close the window, please?", "Could you close the door?"], "просьба"], ["I'm waiting for...", "Я жду...", ["I'm waiting for a taxi.", "I'm waiting for my son."], "город"], ["I'm running late.", "Я опаздываю.", ["I'm running late because of traffic.", "I'm running ten minutes late."], "время"], ["I'll be there in...", "Я буду там через...", ["I'll be there in ten minutes.", "I'll be there in half an hour."], "время"], ["Let's meet at...", "Давай встретимся в/у...", ["Let's meet at the entrance.", "Let's meet at three."], "встреча"], ["I forgot my...", "Я забыл свой...", ["I forgot my wallet.", "I forgot my keys."], "проблема"], ["I lost my...", "Я потерял свой...", ["I lost my phone.", "I lost my card."], "проблема"], ["Can I charge my phone?", "Можно зарядить телефон?", ["Can I charge my phone here?", "Can I charge my phone for a few minutes?"], "быт"], ["The battery is low.", "Батарея садится.", ["My phone battery is low.", "The battery is almost dead."], "техника"], ["I need to make a call.", "Мне нужно позвонить.", ["I need to make a quick call.", "I need to make a call to my wife."], "телефон"], ["Can you send me the address?", "Можешь отправить мне адрес?", ["Can you send me the address on WhatsApp?", "Can you send me the exact address?"], "координация"], ["Can you share your location?", "Можешь отправить геолокацию?", ["Can you share your location with me?", "Can you share your location in the chat?"], "координация"], ["I need to pick up...", "Мне нужно забрать...", ["I need to pick up my son.", "I need to pick up an order."], "дела"], ["I need to drop off...", "Мне нужно отвезти/оставить...", ["I need to drop off my son at school.", "I need to drop off the documents."], "дела"], ["I'm on my way.", "Я уже в пути.", ["I'm on my way now.", "I'm on my way to the office."], "координация"], ["I'm stuck in traffic.", "Я застрял в пробке.", ["I'm stuck in traffic on the way.", "I'm stuck in traffic, sorry."], "город"], ["Could you wait a minute?", "Можете подождать минуту?", ["Could you wait a minute, please?", "Could you wait five minutes?"], "просьба"], ["I'll be right back.", "Я сейчас вернусь.", ["I'll be right back in two minutes.", "I'll be right back with the documents."], "пауза"], ["It's not a big deal.", "Это не страшно / не проблема.", ["It's not a big deal, we can change it.", "It's not a big deal for me."], "успокоить"], ["No worries.", "Ничего страшного.", ["No worries, take your time.", "No worries, it happens."], "реакция"], ["Take your time.", "Не торопитесь.", ["Take your time, I'm not in a hurry.", "Take your time with the decision."], "вежливость"], ["I'm in a hurry.", "Я тороплюсь.", ["I'm in a hurry today.", "I'm in a hurry, can we do it quickly?"], "время"], ["I have plans tonight.", "У меня планы на вечер.", ["I have plans tonight with my family.", "I have plans tonight, sorry."], "разговор"], ["We need to clean up.", "Нам нужно прибраться.", ["We need to clean up the room.", "We need to clean up after dinner."], "дом"], ["Can you help me carry this?", "Можешь помочь мне это донести?", ["Can you help me carry this box?", "Can you help me carry the bags?"], "дом"], ["It's on the left.", "Это слева.", ["It's on the left after the entrance.", "The shop is on the left."], "ориентирование"], ["It's on the right.", "Это справа.", ["It's on the right side.", "The office is on the right."], "ориентирование"], ["It's next to...", "Это рядом с...", ["It's next to the supermarket.", "It's next to the pharmacy."], "ориентирование"]]}, "food": {"title": "Кафе, магазин, еда", "emoji": "🍽️", "chunks": [["I'd like...", "Я бы хотел...", ["I'd like a coffee, please.", "I'd like this salad."], "заказ"], ["Can I see the menu?", "Можно меню?", ["Can I see the menu, please?", "Can I see the drinks menu?"], "кафе"], ["What do you recommend?", "Что вы посоветуете?", ["What do you recommend for dinner?", "What do you recommend for kids?"], "совет"], ["Is it spicy?", "Это острое?", ["Is this dish spicy?", "Is it very spicy?"], "еда"], ["Does it contain...?", "Там есть...?", ["Does it contain nuts?", "Does it contain pork?"], "состав"], ["Can I have it without...?", "Можно без...?", ["Can I have it without onions?", "Can I have it without sauce?"], "заказ"], ["Can I have it with...?", "Можно с...?", ["Can I have it with rice?", "Can I have it with extra cheese?"], "заказ"], ["I'll have the same.", "Мне то же самое.", ["I'll have the same, please.", "I'll have the same as him."], "заказ"], ["We're ready to order.", "Мы готовы заказать.", ["We're ready to order now.", "I think we're ready to order."], "кафе"], ["Could we have some water?", "Можно воды?", ["Could we have some still water?", "Could we have some water for the table?"], "кафе"], ["Still or sparkling?", "Без газа или с газом?", ["Still water, please.", "Sparkling water, please."], "напитки"], ["Can we sit outside?", "Можно сесть на улице?", ["Can we sit outside if there is a free table?", "Can we sit outside with a dog?"], "кафе"], ["Do you have a table for...?", "У вас есть столик на...?", ["Do you have a table for three?", "Do you have a table for tonight?"], "кафе"], ["Can we have the bill?", "Можно счёт?", ["Can we have the bill, please?", "Can we have the bill when you have a moment?"], "кафе"], ["Could we split the bill?", "Можно разделить счёт?", ["Could we split the bill in two?", "Could we pay separately?"], "оплата"], ["It's very tasty.", "Очень вкусно.", ["It's very tasty, thank you.", "The chicken is very tasty."], "реакция"], ["It's too salty.", "Слишком солёное.", ["It's a little too salty for me.", "The soup is too salty."], "еда"], ["It's undercooked.", "Это недоготовлено.", ["The steak is undercooked.", "The chicken looks undercooked."], "проблема"], ["It's overcooked.", "Это переготовлено.", ["The steak is overcooked.", "The pasta is overcooked."], "проблема"], ["Can you heat it up?", "Можете подогреть?", ["Can you heat it up a little?", "Can you heat this soup up?"], "просьба"], ["Can I get this to go?", "Можно с собой?", ["Can I get this to go, please?", "Can we take the rest to go?"], "кафе"], ["Do you have any vegetarian options?", "У вас есть вегетарианские варианты?", ["Do you have any vegetarian options for lunch?", "Do you have any vegetarian pizza?"], "меню"], ["Do you have a kids' menu?", "У вас есть детское меню?", ["Do you have a kids' menu here?", "Do you have anything for children?"], "семья"], ["Can I have a glass of...?", "Можно стакан...?", ["Can I have a glass of water?", "Can I have a glass of juice?"], "напитки"], ["Can I have a cup of...?", "Можно чашку...?", ["Can I have a cup of tea?", "Can I have a cup of coffee?"], "напитки"], ["Do you have this in stock?", "Это есть в наличии?", ["Do you have this in stock today?", "Do you have this size in stock?"], "магазин"], ["How much is it per kilo?", "Сколько стоит за килограмм?", ["How much is it per kilo?", "How much are these apples per kilo?"], "магазин"], ["Could you weigh this?", "Можете это взвесить?", ["Could you weigh this fruit?", "Could you weigh this for me?"], "магазин"], ["I'd like half a kilo of...", "Мне полкило...", ["I'd like half a kilo of cheese.", "I'd like half a kilo of tomatoes."], "магазин"], ["I'd like a piece of...", "Мне кусок...", ["I'd like a piece of cheese.", "I'd like a piece of cake."], "магазин"], ["Can you cut it?", "Можете нарезать?", ["Can you cut it into slices?", "Can you cut it in half?"], "магазин"], ["Is it fresh?", "Это свежее?", ["Is the fish fresh today?", "Is this bread fresh?"], "магазин"], ["What's inside?", "Что внутри?", ["What's inside this pastry?", "What's inside this sandwich?"], "состав"], ["I have an allergy to...", "У меня аллергия на...", ["I have an allergy to nuts.", "I have an allergy to seafood."], "здоровье"], ["Can you make it less spicy?", "Можно сделать менее острым?", ["Can you make it less spicy for my son?", "Can you make it not spicy?"], "заказ"], ["Medium rare, please.", "Средняя прожарка с кровью, пожалуйста.", ["Medium rare, please, if possible.", "I'd like the steak medium rare."], "стейк"], ["Well done, please.", "Полная прожарка, пожалуйста.", ["Well done, please.", "My son wants it well done."], "стейк"], ["Can I have extra sauce?", "Можно дополнительный соус?", ["Can I have extra sauce on the side?", "Can I have extra barbecue sauce?"], "заказ"], ["Can I have the sauce on the side?", "Можно соус отдельно?", ["Can I have the sauce on the side, please?", "Could you put the sauce on the side?"], "заказ"], ["This is not what I ordered.", "Это не то, что я заказал.", ["Sorry, this is not what I ordered.", "This is not what we ordered."], "проблема"], ["We are still waiting for...", "Мы всё ещё ждём...", ["We are still waiting for our drinks.", "We are still waiting for the main course."], "кафе"], ["Everything was great.", "Всё было отлично.", ["Everything was great, thank you.", "The food was great."], "реакция"], ["Could we have another fork?", "Можно ещё одну вилку?", ["Could we have another fork, please?", "Could we have another napkin?"], "кафе"], ["Can I have a bag?", "Можно пакет?", ["Can I have a bag, please?", "Can I have a paper bag?"], "магазин"], ["Do you deliver?", "У вас есть доставка?", ["Do you deliver to this address?", "Do you deliver in the evening?"], "доставка"]]}, "smalltalk": {"title": "Small talk и знакомство", "emoji": "💬", "chunks": [["Nice to meet you.", "Приятно познакомиться.", ["Nice to meet you, I'm Andrey.", "Nice to meet you too."], "знакомство"], ["How's it going?", "Как дела?", ["How's it going today?", "Hey, how's it going?"], "неформально"], ["I'm doing well.", "У меня всё хорошо.", ["I'm doing well, thanks.", "I'm doing well, how about you?"], "ответ"], ["Not bad.", "Неплохо.", ["Not bad, just busy.", "Not bad, thanks."], "ответ"], ["What do you do?", "Чем вы занимаетесь?", ["What do you do for work?", "What do you do in Moscow?"], "знакомство"], ["I work in...", "Я работаю в...", ["I work in sales.", "I work in outdoor kitchen projects."], "о себе"], ["I'm from...", "Я из...", ["I'm from Moscow region.", "I'm from Russia."], "о себе"], ["I live near...", "Я живу рядом с...", ["I live near Moscow.", "I live near Troitsk."], "о себе"], ["I'm here with my family.", "Я здесь с семьёй.", ["I'm here with my family on vacation.", "I'm here with my wife and son."], "о себе"], ["My son is interested in...", "Мой сын интересуется...", ["My son is interested in football.", "My son is interested in Minecraft."], "семья"], ["What about you?", "А вы?", ["I like football. What about you?", "I'm from Russia. What about you?"], "поддержать разговор"], ["Sounds good.", "Звучит хорошо.", ["Sounds good to me.", "That sounds good."], "реакция"], ["Sounds interesting.", "Звучит интересно.", ["That sounds interesting.", "Your job sounds interesting."], "реакция"], ["I've heard about...", "Я слышал о...", ["I've heard about this place.", "I've heard about that school."], "разговор"], ["I've never been to...", "Я никогда не был в...", ["I've never been to Valencia.", "I've never been to Washington."], "опыт"], ["I've been to...", "Я был в...", ["I've been to Istanbul.", "I've been to Georgia."], "опыт"], ["I like the atmosphere here.", "Мне нравится атмосфера здесь.", ["I like the atmosphere here a lot.", "I like the atmosphere in this city."], "мнение"], ["The weather is nice today.", "Сегодня хорошая погода.", ["The weather is nice today, isn't it?", "The weather is nice for a walk."], "small talk"], ["It's a bit hot today.", "Сегодня жарковато.", ["It's a bit hot today for me.", "It's a bit hot in the city."], "small talk"], ["It's a bit cold today.", "Сегодня прохладно.", ["It's a bit cold today, but nice.", "It's a bit cold in the evening."], "small talk"], ["How long have you lived here?", "Как давно вы здесь живёте?", ["How long have you lived here in Spain?", "How long have you lived in this city?"], "вопрос"], ["Do you come here often?", "Вы часто сюда приходите?", ["Do you come here often with your family?", "Do you come here often for coffee?"], "вопрос"], ["What brought you here?", "Что вас сюда привело?", ["What brought you here to Italy?", "What brought you here today?"], "вопрос"], ["I'm learning English.", "Я учу английский.", ["I'm learning English with my son.", "I'm learning English for travel."], "о себе"], ["I'm trying to practice more.", "Я стараюсь больше практиковаться.", ["I'm trying to practice more every day.", "I'm trying to practice speaking."], "о себе"], ["Sorry, my English is not perfect.", "Извините, мой английский не идеален.", ["Sorry, my English is not perfect, but I'm learning.", "Sorry, my English is not perfect yet."], "страховка"], ["Could you repeat that?", "Можете повторить?", ["Could you repeat that, please?", "Sorry, could you repeat that?"], "понимание"], ["I see what you mean.", "Я понимаю, что вы имеете в виду.", ["I see what you mean now.", "Yes, I see what you mean."], "реакция"], ["That's a good point.", "Хорошее замечание.", ["That's a good point, I didn't think about it.", "That's a really good point."], "реакция"], ["I didn't know that.", "Я этого не знал.", ["Oh, I didn't know that.", "I didn't know that about this city."], "реакция"], ["That's funny.", "Забавно.", ["That's funny, my son says the same thing.", "That's funny, I had the same situation."], "реакция"], ["I had the same problem.", "У меня была такая же проблема.", ["I had the same problem with my car.", "I had the same problem last year."], "разговор"], ["I know what you mean.", "Я понимаю, о чём вы.", ["I know what you mean, it's difficult.", "I know what you mean about work."], "эмпатия"], ["That's exactly what I mean.", "Вот именно это я имею в виду.", ["Yes, that's exactly what I mean.", "That's exactly what I mean about language."], "подтверждение"], ["Let me give you an example.", "Дайте приведу пример.", ["Let me give you an example from my work.", "Let me give you a simple example."], "объяснение"], ["By the way...", "Кстати...", ["By the way, do you know this place?", "By the way, I have a question."], "переход"], ["Anyway...", "В общем / ладно...", ["Anyway, it was nice to talk to you.", "Anyway, let's continue."], "переход"], ["It was nice talking to you.", "Было приятно поговорить.", ["It was nice talking to you today.", "It was nice talking to you, see you later."], "завершение"], ["See you around.", "Увидимся.", ["See you around, have a good day.", "Okay, see you around."], "прощание"], ["Have a good one.", "Хорошего дня / удачи.", ["Thanks, have a good one.", "See you, have a good one."], "прощание"], ["What are you into?", "Чем ты увлекаешься?", ["What are you into these days?", "What are your kids into?"], "интересы"], ["I'm into...", "Я увлекаюсь...", ["I'm into grills and outdoor kitchens.", "I'm into cars and travel."], "интересы"], ["I'm not really into...", "Я не особо увлекаюсь...", ["I'm not really into loud parties.", "I'm not really into video games."], "интересы"], ["I'm more into...", "Мне больше нравится...", ["I'm more into practical things.", "I'm more into old cars."], "предпочтения"], ["That reminds me of...", "Это напоминает мне...", ["That reminds me of my old car.", "That reminds me of my trip to Istanbul."], "связать разговор"]]}, "school": {"title": "Сын, школа, учеба", "emoji": "🎒", "chunks": [["My son is...", "Моему сыну... / мой сын...", ["My son is thirteen.", "My son is in seventh grade."], "семья"], ["He is interested in...", "Он интересуется...", ["He is interested in football.", "He is interested in Minecraft."], "о сыне"], ["He wants to...", "Он хочет...", ["He wants to play football better.", "He wants to study abroad."], "о сыне"], ["He is good at...", "У него хорошо получается...", ["He is good at chess.", "He is good at building things in Minecraft."], "способности"], ["He needs to improve...", "Ему нужно подтянуть...", ["He needs to improve his English.", "He needs to improve his speaking."], "учеба"], ["We are thinking about...", "Мы думаем о...", ["We are thinking about schools abroad.", "We are thinking about language courses."], "планы"], ["What are the requirements?", "Какие требования?", ["What are the requirements for admission?", "What are the requirements for this course?"], "поступление"], ["How much does it cost per year?", "Сколько это стоит в год?", ["How much does the school cost per year?", "How much does the program cost per year?"], "стоимость"], ["Are there any entrance exams?", "Есть вступительные экзамены?", ["Are there any entrance exams for this school?", "Are there any English tests?"], "поступление"], ["What level of English is required?", "Какой уровень английского нужен?", ["What level of English is required for admission?", "What level of English is required for the course?"], "английский"], ["Can parents stay with the child?", "Родители могут жить с ребёнком?", ["Can parents stay with the child during the school year?", "Can one parent stay with the child?"], "переезд"], ["What documents do we need?", "Какие документы нужны?", ["What documents do we need for the application?", "What documents do we need for the visa?"], "документы"], ["How long does the process take?", "Сколько занимает процесс?", ["How long does the application process take?", "How long does the visa process take?"], "процесс"], ["We need more information about...", "Нам нужна дополнительная информация о...", ["We need more information about the school.", "We need more information about accommodation."], "запрос"], ["Could you send us the details?", "Можете отправить подробности?", ["Could you send us the details by email?", "Could you send us the details about the program?"], "запрос"], ["He plays as a defender.", "Он играет защитником.", ["He plays as a defender in football.", "He plays as a defender, but he wants to attack."], "футбол"], ["He wants to play in attack.", "Он хочет играть в атаке.", ["He wants to play in attack more often.", "He wants to play as a forward."], "футбол"], ["He trains...", "Он тренируется...", ["He trains twice a week.", "He trains with a football academy."], "спорт"], ["He needs more practice.", "Ему нужно больше практики.", ["He needs more speaking practice.", "He needs more football practice."], "развитие"], ["We practice together.", "Мы занимаемся вместе.", ["We practice English together.", "We practice phrases together every day."], "семья"], ["We try to keep it simple.", "Мы стараемся делать проще.", ["We try to keep it simple and regular.", "We try to keep it simple for him."], "метод"], ["He gets bored quickly.", "Ему быстро становится скучно.", ["He gets bored quickly if it's too difficult.", "He gets bored quickly with long exercises."], "учеба"], ["He likes learning through games.", "Ему нравится учиться через игры.", ["He likes learning English through games.", "He likes learning through Minecraft."], "мотивация"], ["We need a clear system.", "Нам нужна понятная система.", ["We need a clear system for learning English.", "We need a clear system for the week."], "метод"], ["The goal is to...", "Цель — ...", ["The goal is to speak more freely.", "The goal is to understand simple conversations."], "цель"], ["He should be able to...", "Он должен уметь...", ["He should be able to introduce himself.", "He should be able to ask simple questions."], "результат"], ["How can we prepare?", "Как нам подготовиться?", ["How can we prepare for the interview?", "How can we prepare for the test?"], "подготовка"], ["Is there an interview?", "Есть собеседование?", ["Is there an interview with the child?", "Is there an interview with parents?"], "поступление"], ["What is the school schedule like?", "Какое расписание в школе?", ["What is the school schedule like during the week?", "What is the daily schedule like?"], "школа"], ["What subjects do students study?", "Какие предметы изучают ученики?", ["What subjects do students study in grade seven?", "What subjects do students study in English?"], "школа"], ["Are there sports activities?", "Есть спортивные занятия?", ["Are there sports activities after school?", "Are there football activities?"], "школа"], ["Is there support for international students?", "Есть поддержка для иностранных учеников?", ["Is there support for international students who don't speak English well?", "Is there support for new students?"], "школа"], ["How many students are in a class?", "Сколько учеников в классе?", ["How many students are in a class on average?", "How many students are in the English class?"], "школа"], ["Can we visit the school?", "Можно посетить школу?", ["Can we visit the school before applying?", "Can we visit the school with our son?"], "визит"], ["Can we attend an open day?", "Можно прийти на день открытых дверей?", ["Can we attend an open day this year?", "Can we attend an online open day?"], "визит"], ["He needs to feel comfortable.", "Ему нужно чувствовать себя комфортно.", ["He needs to feel comfortable at school.", "He needs to feel comfortable speaking English."], "эмоции"], ["He is shy at first.", "Сначала он стесняется.", ["He is shy at first, but then he opens up.", "He is shy at first with new people."], "о характере"], ["He learns better when...", "Он лучше учится, когда...", ["He learns better when the topic is interesting.", "He learns better when he can use examples."], "метод"], ["We don't want to push too hard.", "Мы не хотим слишком давить.", ["We don't want to push too hard with English.", "We don't want to push too hard, but we need progress."], "родительство"], ["We want him to enjoy it.", "Мы хотим, чтобы ему это нравилось.", ["We want him to enjoy learning English.", "We want him to enjoy the process."], "мотивация"], ["He has homework to do.", "Ему нужно делать домашку.", ["He has homework to do tonight.", "He has English homework to do."], "школа"], ["He needs a break.", "Ему нужен перерыв.", ["He needs a break after school.", "He needs a short break before practice."], "режим"], ["Let's do one more example.", "Давай сделаем ещё один пример.", ["Let's do one more example and stop.", "Let's do one more example with this phrase."], "занятия"], ["Say it one more time.", "Скажи ещё раз.", ["Say it one more time, slowly.", "Say it one more time with your own example."], "практика"], ["Make your own sentence.", "Составь своё предложение.", ["Make your own sentence with this chunk.", "Make your own sentence about football."], "практика"]]}, "cars": {"title": "Машины и дороги", "emoji": "🚙", "chunks": [["I'm looking for a car with...", "Я ищу машину с...", ["I'm looking for a car with an automatic transmission.", "I'm looking for a car with all-wheel drive."], "выбор авто"], ["It has a...", "У неё есть...", ["It has a naturally aspirated engine.", "It has a reliable automatic gearbox."], "описание"], ["I'm interested in...", "Меня интересует...", ["I'm interested in a Mazda CX-5.", "I'm interested in a Toyota Highlander."], "выбор авто"], ["How many miles are on it?", "Какой пробег?", ["How many miles are on it?", "How many kilometers are on it?"], "покупка"], ["Has it been in an accident?", "Она была в ДТП?", ["Has it been in an accident before?", "Has it been in any major accidents?"], "покупка"], ["Do you have the service history?", "Есть история обслуживания?", ["Do you have the full service history?", "Do you have any service records?"], "покупка"], ["Can I see the documents?", "Можно посмотреть документы?", ["Can I see the documents for the car?", "Can I see the registration documents?"], "покупка"], ["Can we take it for a test drive?", "Можно пройти тест-драйв?", ["Can we take it for a test drive today?", "Can I take it for a short test drive?"], "покупка"], ["The engine sounds...", "Двигатель звучит...", ["The engine sounds smooth.", "The engine sounds a bit noisy."], "осмотр"], ["There is a noise from...", "Есть шум из...", ["There is a noise from the rear left side.", "There is a noise from the engine bay."], "проблема"], ["The battery is dead.", "Аккумулятор сел.", ["The battery is dead again.", "The battery is dead after two days."], "поломка"], ["The car overheated.", "Машина перегрелась.", ["The car overheated in traffic.", "The car overheated on the way."], "поломка"], ["The coolant is leaking.", "Течёт антифриз.", ["The coolant is leaking somewhere.", "The coolant is leaking under the car."], "поломка"], ["The check engine light is on.", "Горит check engine.", ["The check engine light is on again.", "The check engine light came on yesterday."], "поломка"], ["I need to replace...", "Мне нужно заменить...", ["I need to replace the battery.", "I need to replace the tires."], "ремонт"], ["How much will it cost to fix?", "Сколько будет стоить ремонт?", ["How much will it cost to fix the leak?", "How much will it cost to fix the suspension?"], "ремонт"], ["How long will the repair take?", "Сколько займёт ремонт?", ["How long will the repair take?", "How long will it take to replace it?"], "ремонт"], ["Can you check the suspension?", "Можете проверить подвеску?", ["Can you check the suspension noise?", "Can you check the rear suspension?"], "сервис"], ["Can you check the brakes?", "Можете проверить тормоза?", ["Can you check the brakes before the trip?", "Can you check the brake pads?"], "сервис"], ["The steering feels...", "Руль ощущается...", ["The steering feels loose.", "The steering feels heavy."], "осмотр"], ["It pulls to the right.", "Её тянет вправо.", ["The car pulls to the right when braking.", "It pulls to the right on the highway."], "осмотр"], ["It feels comfortable in the city.", "В городе она комфортная.", ["It feels comfortable in the city.", "It feels comfortable for daily driving."], "оценка"], ["It feels too big for me.", "Она кажется мне слишком большой.", ["It feels too big for the city.", "It feels too big for parking."], "оценка"], ["It's more reliable than...", "Она надёжнее, чем...", ["It's more reliable than many new cars.", "It's more reliable than this model."], "сравнение"], ["It's cheaper to maintain.", "Её дешевле обслуживать.", ["It's cheaper to maintain than a German SUV.", "It's cheaper to maintain in the long run."], "сравнение"], ["It's expensive to maintain.", "Её дорого обслуживать.", ["It's expensive to maintain after 150,000 kilometers.", "It's expensive to maintain if something breaks."], "сравнение"], ["I prefer a naturally aspirated engine.", "Я предпочитаю атмосферный двигатель.", ["I prefer a naturally aspirated engine for reliability.", "I prefer a naturally aspirated engine with an automatic transmission."], "предпочтение"], ["I don't need serious off-road capability.", "Мне не нужен серьёзный внедорожный потенциал.", ["I don't need serious off-road capability, just all-wheel drive.", "I don't need a frame SUV."], "потребность"], ["I need something reliable.", "Мне нужно что-то надёжное.", ["I need something reliable for my family.", "I need something reliable for long trips."], "потребность"], ["I like the way it looks.", "Мне нравится, как она выглядит.", ["I like the way it looks, but I'm not sure about reliability.", "I like the way the Prado looks."], "мнение"], ["What's the real fuel consumption?", "Какой реальный расход топлива?", ["What's the real fuel consumption in the city?", "What's the real fuel consumption on the highway?"], "расход"], ["It uses too much fuel.", "Она слишком много расходует.", ["It uses too much fuel in the city.", "It uses too much fuel for daily driving."], "расход"], ["It's good value for money.", "Это хорошее соотношение цены и качества.", ["It's good value for money for this budget.", "I think it's good value for money."], "оценка"], ["It's not worth the money.", "Она не стоит этих денег.", ["It's not worth the money in this condition.", "It's not worth the money for me."], "оценка"], ["Can you lower the price?", "Можете снизить цену?", ["Can you lower the price a little?", "Can you lower the price if I pay today?"], "переговоры"], ["What is included in the price?", "Что входит в цену?", ["What is included in the price of the car?", "What is included in the final price?"], "покупка"], ["Are there any hidden costs?", "Есть скрытые расходы?", ["Are there any hidden costs after purchase?", "Are there any hidden costs for registration?"], "покупка"], ["Can you send me more photos?", "Можете отправить больше фото?", ["Can you send me more photos of the interior?", "Can you send me photos of the rust?"], "покупка"], ["Can you show me the underside?", "Можете показать днище?", ["Can you show me the underside of the car?", "Can you show me the frame?"], "осмотр"], ["There is rust on...", "Есть ржавчина на...", ["There is rust on the sills.", "There is rust on the rear arches."], "осмотр"], ["The condition is better than I expected.", "Состояние лучше, чем я ожидал.", ["The condition is better than I expected for this age.", "The interior is better than I expected."], "оценка"], ["The condition is worse than I expected.", "Состояние хуже, чем я ожидал.", ["The condition is worse than I expected from the photos.", "The body is worse than I expected."], "оценка"], ["I need to think it over.", "Мне нужно обдумать.", ["I need to think it over before deciding.", "I need to think it over with my family."], "решение"], ["I'm comparing it with...", "Я сравниваю это с...", ["I'm comparing it with a Mazda CX-5.", "I'm comparing it with a Toyota RAV4."], "сравнение"], ["I need a car for...", "Мне нужна машина для...", ["I need a car for the city and family trips.", "I need a car for daily driving."], "потребность"]]}, "bbq": {"title": "BBQ, грили, работа с клиентами", "emoji": "🔥", "chunks": [["We need to clarify...", "Нам нужно уточнить...", ["We need to clarify the dimensions.", "We need to clarify the delivery date."], "работа"], ["The first thing to check is...", "Первое, что нужно проверить, — ...", ["The first thing to check is the grill size.", "The first thing to check is ventilation."], "структура"], ["What are the dimensions?", "Какие размеры?", ["What are the dimensions of the niche?", "What are the dimensions of the countertop?"], "проект"], ["What is the distance between...?", "Какое расстояние между...?", ["What is the distance between the grill and the wall?", "What is the distance between the modules?"], "проект"], ["Where will the grill be installed?", "Где будет установлен гриль?", ["Where will the grill be installed exactly?", "Where will the gas grill be installed?"], "проект"], ["Is the area covered?", "Зона под навесом?", ["Is the BBQ area covered?", "Is the terrace covered or open?"], "терраса"], ["Is there a roof above it?", "Над этим есть крыша?", ["Is there a roof above the grill?", "Is there a roof above the outdoor kitchen?"], "терраса"], ["We need proper ventilation.", "Нужна правильная вентиляция.", ["We need proper ventilation above the grill.", "We need proper ventilation for a covered terrace."], "вытяжка"], ["A hood is not just a metal cover.", "Вытяжка — это не просто металлический зонт.", ["A hood is not just a metal cover; it needs airflow.", "A hood is not just a decorative piece."], "экспертность"], ["The grill needs clearance.", "Грилю нужен зазор.", ["The grill needs clearance for the lid.", "The grill needs clearance from the wall."], "монтаж"], ["The lid needs space to open.", "Крышке нужно место для открытия.", ["The lid needs space to open fully.", "The lid needs space behind the grill."], "монтаж"], ["We need access for service.", "Нужен доступ для обслуживания.", ["We need access for service under the grill.", "We need access for service and cleaning."], "эксплуатация"], ["Where are the sockets?", "Где розетки?", ["Where are the sockets for the grill?", "Where are the sockets for the lights?"], "электрика"], ["Where is the water point?", "Где точка воды?", ["Where is the water point for the sink?", "Where is the drain?"], "вода"], ["The final price includes...", "Итоговая цена включает...", ["The final price includes delivery.", "The final price includes materials and installation."], "КП"], ["The price does not include...", "Цена не включает...", ["The price does not include electrical work.", "The price does not include additional equipment."], "КП"], ["The lead time is...", "Срок изготовления — ...", ["The lead time is about four weeks.", "The lead time depends on the material."], "сроки"], ["Production starts after payment.", "Производство запускается после оплаты.", ["Production starts after full payment.", "Production starts after we receive the payment."], "условие"], ["We work with full prepayment.", "Мы работаем по 100% предоплате.", ["We work with full prepayment before production.", "We work with full prepayment for custom projects."], "условие"], ["This option is more practical.", "Этот вариант практичнее.", ["This option is more practical for outdoor use.", "This option is more practical for cleaning."], "совет"], ["This material is suitable for outdoor use.", "Этот материал подходит для улицы.", ["This material is suitable for outdoor use all year round.", "This material is suitable for a covered terrace."], "материал"], ["This material is not ideal for outdoor use.", "Этот материал не идеален для улицы.", ["This material is not ideal for outdoor use in direct sun.", "This material is not ideal near high heat."], "материал"], ["Stainless steel is easy to clean.", "Нержавейку легко чистить.", ["Stainless steel is easy to clean after cooking.", "Stainless steel is easy to clean and durable."], "материал"], ["The countertop should be heat-resistant.", "Столешница должна быть термостойкой.", ["The countertop should be heat-resistant near the grill.", "The countertop should be heat-resistant and weather-resistant."], "материал"], ["We need to consider real use.", "Нужно учитывать реальную эксплуатацию.", ["We need to consider real use, not only the render.", "We need to consider real use and cleaning."], "экспертность"], ["The render doesn't show...", "На рендере не видно...", ["The render doesn't show the clearances.", "The render doesn't show the sockets."], "проект"], ["We can offer two options.", "Мы можем предложить два варианта.", ["We can offer two options: gas or charcoal.", "We can offer two options by budget."], "продажи"], ["The main advantage is...", "Главное преимущество — ...", ["The main advantage is durability.", "The main advantage is convenience."], "презентация"], ["The main difference is...", "Главное отличие — ...", ["The main difference is the burner system.", "The main difference is the size."], "сравнение"], ["It's better to decide before finishing.", "Лучше решить до отделки.", ["It's better to decide before finishing the terrace.", "It's better to decide before the electrical work."], "совет"], ["It will be difficult to change later.", "Потом будет сложно изменить.", ["It will be difficult to change the sockets later.", "It will be difficult to change the layout later."], "предупреждение"], ["We should avoid placing...", "Лучше не размещать...", ["We should avoid placing the grill too close to the wall.", "We should avoid placing sockets directly behind heat."], "безопасность"], ["The gas cylinder should be...", "Газовый баллон должен быть...", ["The gas cylinder should be accessible.", "The gas cylinder should be placed according to safety rules."], "безопасность"], ["Charcoal gives a different flavor.", "Уголь даёт другой вкус.", ["Charcoal gives a different flavor and ritual.", "Charcoal gives a more traditional BBQ experience."], "продажи"], ["Gas is more convenient for everyday use.", "Газ удобнее на каждый день.", ["Gas is more convenient for quick dinners.", "Gas is more convenient for everyday cooking."], "продажи"], ["Ceramic grills hold heat well.", "Керамические грили хорошо держат тепло.", ["Ceramic grills hold heat well for long cooks.", "Ceramic grills hold heat well and save fuel."], "продажи"], ["This grill is good for...", "Этот гриль хорош для...", ["This grill is good for steaks and vegetables.", "This grill is good for a family terrace."], "продажи"], ["This is enough for...", "Этого достаточно для...", ["This is enough for a family of four.", "This is enough for basic BBQ tasks."], "продажи"], ["This may be too small for...", "Это может быть маловато для...", ["This may be too small for large parties.", "This may be too small if you cook for guests often."], "совет"], ["This may be overkill for...", "Это может быть избыточно для...", ["This may be overkill for a small terrace.", "This may be overkill if you cook once a month."], "совет"], ["We need photos from the site.", "Нужны фото с объекта.", ["We need photos from the site before the estimate.", "We need photos from the site and dimensions."], "проект"], ["Please send a plan with dimensions.", "Пришлите план с размерами.", ["Please send a plan with dimensions and photos.", "Please send a plan with exact dimensions."], "запрос"], ["Please mark the utilities.", "Отметьте коммуникации.", ["Please mark the utilities on the plan.", "Please mark the water and electrical points."], "запрос"], ["We'll prepare a proposal.", "Мы подготовим предложение.", ["We'll prepare a proposal with options.", "We'll prepare a proposal after we get the dimensions."], "работа"], ["Let's choose the equipment first.", "Сначала выберем оборудование.", ["Let's choose the equipment first, then the modules.", "Let's choose the grill first."], "проект"], ["Then we can finalize the layout.", "Потом финализируем компоновку.", ["Then we can finalize the layout and estimate.", "Then we can finalize the technical details."], "проект"]]}, "games": {"title": "Minecraft, игры, интересы", "emoji": "🎮", "chunks": [["I'm playing...", "Я играю в...", ["I'm playing Minecraft.", "I'm playing with my friends."], "игры"], ["I like building...", "Мне нравится строить...", ["I like building houses.", "I like building cities in Minecraft."], "Minecraft"], ["I want to build...", "Я хочу построить...", ["I want to build a castle.", "I want to build a football stadium."], "Minecraft"], ["Can you help me build...?", "Поможешь построить...?", ["Can you help me build a base?", "Can you help me build a farm?"], "Minecraft"], ["Where should we go?", "Куда нам идти?", ["Where should we go next?", "Where should we go to find diamonds?"], "игры"], ["I found...", "Я нашёл...", ["I found diamonds.", "I found a village."], "игры"], ["I need more...", "Мне нужно больше...", ["I need more wood.", "I need more food."], "игры"], ["Let's make...", "Давай сделаем...", ["Let's make a house.", "Let's make a new world."], "игры"], ["Let's explore...", "Давай исследуем...", ["Let's explore the cave.", "Let's explore the map."], "игры"], ["Watch out!", "Осторожно!", ["Watch out, there is a creeper!", "Watch out, don't fall!"], "игры"], ["I need help!", "Мне нужна помощь!", ["I need help, I'm stuck!", "I need help with this level."], "игры"], ["I'm out of...", "У меня закончились...", ["I'm out of arrows.", "I'm out of food."], "игры"], ["I don't have enough...", "У меня не хватает...", ["I don't have enough stone.", "I don't have enough time."], "игры"], ["Let's try again.", "Давай попробуем ещё раз.", ["Let's try again after this round.", "Let's try again, but slower."], "игры"], ["That was close!", "Вот это было близко!", ["That was close, I almost died!", "That was close, but we won."], "реакция"], ["We need a better plan.", "Нам нужен план получше.", ["We need a better plan for the base.", "We need a better plan before the fight."], "игры"], ["Let's split up.", "Давай разделимся.", ["Let's split up and look for resources.", "Let's split up for five minutes."], "игры"], ["Let's stay together.", "Давай держаться вместе.", ["Let's stay together in the cave.", "Let's stay together until we find the village."], "игры"], ["I'm getting better at...", "У меня лучше получается...", ["I'm getting better at building.", "I'm getting better at speaking English."], "развитие"], ["I'm not very good at...", "Я не очень хорош в...", ["I'm not very good at PvP.", "I'm not very good at explaining in English."], "о себе"], ["How do you do that?", "Как ты это делаешь?", ["How do you do that in Minecraft?", "How do you do that so fast?"], "вопрос"], ["Can you show me?", "Можешь показать?", ["Can you show me how to build it?", "Can you show me the way?"], "вопрос"], ["I have an idea.", "У меня есть идея.", ["I have an idea for the base.", "I have an idea for our next game."], "идея"], ["Let's use...", "Давай используем...", ["Let's use stone here.", "Let's use this strategy."], "игры"], ["This looks cool.", "Это круто выглядит.", ["This house looks cool.", "This skin looks cool."], "мнение"], ["This looks strange.", "Это странно выглядит.", ["This building looks strange.", "This place looks strange."], "мнение"], ["I need to practice...", "Мне нужно потренироваться...", ["I need to practice building.", "I need to practice English chunks."], "развитие"], ["Let's play for...", "Давай поиграем...", ["Let's play for thirty minutes.", "Let's play for one more round."], "время"], ["One more round.", "Ещё один раунд.", ["One more round and then homework.", "Okay, one more round."], "игры"], ["Time is up.", "Время вышло.", ["Time is up, let's stop.", "Time is up, homework first."], "режим"], ["Let's make a deal.", "Давай договоримся.", ["Let's make a deal: English first, then Minecraft.", "Let's make a deal about screen time."], "родительство"], ["First English, then games.", "Сначала английский, потом игры.", ["First English, then games for thirty minutes.", "First English, then Minecraft."], "режим"], ["Say it in English.", "Скажи это по-английски.", ["Say it in English before you click.", "Say it in English one more time."], "практика"], ["Use this phrase.", "Используй эту фразу.", ["Use this phrase in the game.", "Use this phrase with your own example."], "практика"], ["Make a sentence about...", "Составь предложение про...", ["Make a sentence about Minecraft.", "Make a sentence about football."], "практика"], ["What does it mean?", "Что это значит?", ["What does this word mean?", "What does this phrase mean?"], "учеба"], ["How do you say...?", "Как сказать...?", ["How do you say 'алмаз' in English?", "How do you say this in English?"], "учеба"], ["I forgot the word.", "Я забыл слово.", ["I forgot the word for this item.", "I forgot the word, but I remember the phrase."], "учеба"], ["I remember this phrase.", "Я помню эту фразу.", ["I remember this phrase from yesterday.", "I remember this phrase because we used it."], "учеба"], ["This phrase is useful.", "Эта фраза полезная.", ["This phrase is useful in games.", "This phrase is useful for travel too."], "учеба"], ["Let's record your voice.", "Давай запишем твой голос.", ["Let's record your voice for one minute.", "Let's record your voice and listen."], "практика"], ["Try to say it faster.", "Попробуй сказать быстрее.", ["Try to say it faster, but clearly.", "Try to say it faster three times."], "произношение"], ["Try to say it slower.", "Попробуй сказать медленнее.", ["Try to say it slower and louder.", "Try to say it slower first."], "произношение"], ["Good job.", "Хорошая работа.", ["Good job, that was clear.", "Good job, let's do one more."], "поддержка"], ["You're getting better.", "У тебя получается лучше.", ["You're getting better every week.", "You're getting better at speaking."], "поддержка"]]}};
+const DAYS = [
+  {name:'Пн', title:'Ввести 5 чанков', detail:'Выучи чанки 1–5: прочитай, прослушай/проговори, сделай по 2 своих примера.'},
+  {name:'Вт', title:'Закрепить 1–5', detail:'Повтори чанки 1–5: закрой английский, скажи по-английски, затем проверь себя.'},
+  {name:'Ср', title:'Ввести 6–10', detail:'Выучи чанки 6–10: проговори каждый 5 раз и подставь свои слова.'},
+  {name:'Чт', title:'Ввести 11–15', detail:'Выучи чанки 11–15: сделай свои примеры про жизнь, работу, поездки или сына.'},
+  {name:'Пт', title:'Смешать все 15', detail:'Сделай мини-диалог из 8–10 реплик, используя минимум 7 чанков недели.'},
+  {name:'Сб', title:'Найти в живой речи', detail:'Посмотри 5–10 минут видео по теме. Выпиши 2–3 новых чанка в “Мои чанки”.'},
+  {name:'Вс', title:'Повтор и голос', detail:'Запиши голосом 1–2 минуты: рассказ по теме недели с использованием 10+ чанков.'}
+];
+
+const state = {
+  topic: localStorage.getItem('chunkTopic') || 'travel',
+  weeks: Number(localStorage.getItem('chunkWeeks') || 4),
+  week: Number(localStorage.getItem('chunkWeek') || 1),
+  day: Number(localStorage.getItem('chunkDay') || 0),
+  mode: localStorage.getItem('chunkMode') || 'study',
+  activePracticeIndex: 0,
+};
+
+const $ = (id) => document.getElementById(id);
+const key = (...parts) => 'chunkTrainer:' + parts.join(':');
+
+function normalize(text){
+  return String(text || '').toLowerCase().replace(/[’']/g, "'").replace(/[^a-z0-9а-яё ]/gi, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function getCustomChunks(){
+  try { return JSON.parse(localStorage.getItem('customChunks') || '[]'); }
+  catch(e){ return []; }
+}
+function setCustomChunks(items){ localStorage.setItem('customChunks', JSON.stringify(items)); }
+
+function allTopicKeys(){ return Object.keys(DATA).filter(k => k !== 'universal'); }
+function buildMixed(){
+  const chunks = [];
+  allTopicKeys().forEach(k => DATA[k].chunks.slice(0,10).forEach(ch => chunks.push({...pack(ch), topic:k})));
+  return {title:'Смешанный набор', emoji:'🌍', chunks:chunks.map(unpack)};
+}
+function pack(raw){
+  if(Array.isArray(raw)) return {en: raw[0], ru: raw[1], examples: raw[2] || [], source: raw[3] || 'стартовая база'};
+  return raw;
+}
+function unpack(obj){ return [obj.en, obj.ru, obj.examples || [], obj.source || 'стартовая база']; }
+function getTopicData(topic){
+  if(topic === 'mixed') return buildMixed();
+  return DATA[topic] || DATA.travel;
+}
+function deterministicShift(topic, week){
+  let seed = 0;
+  (topic + week).split('').forEach(c => seed += c.charCodeAt(0));
+  return seed;
+}
+function selectWeeklyChunks(){
+  const topicData = getTopicData(state.topic);
+  const topicChunks = topicData.chunks.map(pack);
+  const universal = DATA.universal.chunks.map(pack);
+  const custom = getCustomChunks().filter(c => c.topic === state.topic && Number(c.week) === state.week);
+  const startTopic = ((state.week - 1) * 10 + deterministicShift(state.topic, state.week)) % Math.max(1, topicChunks.length);
+  const startUni = ((state.week - 1) * 5 + deterministicShift('u'+state.topic, state.week)) % universal.length;
+  const selected = [];
+  for(let i=0; i<5; i++) selected.push({...universal[(startUni+i)%universal.length], origin:'База: универсальный шаблон'});
+  for(let i=0; i<10; i++) selected.push({...topicChunks[(startTopic+i)%topicChunks.length], origin:'База: ' + topicData.title});
+  const merged = selected.concat(custom.map(c => ({...c, origin:'Добавлено вручную'})));
+  return merged.slice(0, 15 + custom.length);
+}
+function chunkId(chunk, idx){ return normalize([state.topic, state.week, idx, chunk.en].join('|')); }
+function isKnown(chunk, idx){ return localStorage.getItem(key('known', chunkId(chunk, idx))) === '1'; }
+function toggleKnown(chunk, idx){
+  const k = key('known', chunkId(chunk, idx));
+  if(localStorage.getItem(k) === '1') localStorage.removeItem(k); else localStorage.setItem(k,'1');
+  render();
+}
+
+function initControls(){
+  const topicSelect = $('topicSelect');
+  topicSelect.innerHTML = '';
+  allTopicKeys().forEach(k => {
+    const opt = document.createElement('option'); opt.value = k; opt.textContent = `${DATA[k].emoji} ${DATA[k].title}`; topicSelect.appendChild(opt);
+  });
+  const mix = document.createElement('option'); mix.value='mixed'; mix.textContent='🌍 Смешанный набор'; topicSelect.appendChild(mix);
+  topicSelect.value = state.topic;
+  $('weeksSelect').value = String(state.weeks);
+  fillWeekSelect();
+  $('daySelect').value = String(state.day);
+
+  topicSelect.addEventListener('change', e => { state.topic = e.target.value; state.week = 1; saveBasics(); fillWeekSelect(); render(); });
+  $('weeksSelect').addEventListener('change', e => { state.weeks = Number(e.target.value); if(state.week > state.weeks) state.week = state.weeks; saveBasics(); fillWeekSelect(); render(); });
+  $('weekSelect').addEventListener('change', e => { state.week = Number(e.target.value); saveBasics(); render(); });
+  $('daySelect').addEventListener('change', e => { state.day = Number(e.target.value); saveBasics(); render(); });
+  document.querySelectorAll('[data-mode]').forEach(btn => btn.addEventListener('click', () => { state.mode = btn.dataset.mode; saveBasics(); render(); }));
+  $('resetProgressBtn').addEventListener('click', resetWeekProgress);
+  $('addChunkForm').addEventListener('submit', addCustomChunk);
+  $('exportBtn').addEventListener('click', exportData);
+  $('importFile').addEventListener('change', importData);
+  $('clearCustomBtn').addEventListener('click', clearCurrentCustom);
+}
+function fillWeekSelect(){
+  const ws = $('weekSelect'); ws.innerHTML='';
+  for(let i=1; i<=state.weeks; i++){
+    const opt = document.createElement('option'); opt.value=String(i); opt.textContent=`Неделя ${i}`; ws.appendChild(opt);
+  }
+  ws.value = String(state.week);
+}
+function saveBasics(){
+  localStorage.setItem('chunkTopic', state.topic);
+  localStorage.setItem('chunkWeeks', String(state.weeks));
+  localStorage.setItem('chunkWeek', String(state.week));
+  localStorage.setItem('chunkDay', String(state.day));
+  localStorage.setItem('chunkMode', state.mode);
+}
+function render(){
+  const chunks = selectWeeklyChunks();
+  const topicData = getTopicData(state.topic);
+  $('topicTitle').textContent = `${topicData.emoji} ${topicData.title}`;
+  $('weekTitle').textContent = `Неделя ${state.week} из ${state.weeks}`;
+  const known = chunks.filter((c,i)=>isKnown(c,i)).length;
+  $('statChunks').textContent = chunks.length;
+  $('statKnown').textContent = known;
+  $('statLeft').textContent = Math.max(0, chunks.length-known);
+  $('progressBar').style.width = chunks.length ? `${Math.round(known/chunks.length*100)}%` : '0%';
+  document.querySelectorAll('[data-mode]').forEach(btn => btn.classList.toggle('active', btn.dataset.mode === state.mode));
+  renderDayPlan(chunks);
+  $('studyView').hidden = state.mode !== 'study';
+  $('practiceView').hidden = state.mode !== 'practice';
+  $('customView').hidden = state.mode !== 'custom';
+  if(state.mode === 'study') renderCards(chunks);
+  if(state.mode === 'practice') renderPractice(chunks);
+  if(state.mode === 'custom') renderCustom();
+}
+function renderDayPlan(chunks){
+  const day = DAYS[state.day];
+  $('dayPlanTitle').textContent = `${day.name}: ${day.title}`;
+  $('dayPlanDetail').textContent = day.detail;
+  const ranges = [[0,5],[0,5],[5,10],[10,15],[0,15],[0,15],[0,15]];
+  const [a,b] = ranges[state.day];
+  const box = $('dayChunks'); box.innerHTML='';
+  chunks.slice(a, Math.min(b, chunks.length)).forEach((c,idx)=>{
+    const chip = document.createElement('span'); chip.className='miniChip'; chip.textContent = `${a+idx+1}. ${c.en}`; box.appendChild(chip);
+  });
+}
+function renderCards(chunks){
+  const grid = $('cards'); grid.innerHTML = '';
+  chunks.forEach((c, idx)=>{
+    const known = isKnown(c, idx);
+    const card = document.createElement('article'); card.className = 'card' + (known ? ' known' : '');
+    card.innerHTML = `
+      <div class="cardTop"><span class="num">${idx+1}</span><span class="source">${escapeHtml(c.origin || c.source || 'стартовая база')}</span></div>
+      <h3>${escapeHtml(c.en)}</h3>
+      <p class="ru">${escapeHtml(c.ru)}</p>
+      <div class="examples">${(c.examples||[]).map(ex => `<div>→ ${escapeHtml(ex)}</div>`).join('')}</div>
+      <div class="actions"><button class="ghost small" data-copy="${idx}">Скопировать</button><button class="primary small" data-known="${idx}">${known ? 'Повторить ещё' : 'Знаю'}</button></div>
+    `;
+    grid.appendChild(card);
+  });
+  grid.querySelectorAll('[data-known]').forEach(btn => btn.addEventListener('click', e => toggleKnown(chunks[Number(e.target.dataset.known)], Number(e.target.dataset.known))));
+  grid.querySelectorAll('[data-copy]').forEach(btn => btn.addEventListener('click', e => {
+    const c = chunks[Number(e.target.dataset.copy)];
+    navigator.clipboard?.writeText(`${c.en} — ${c.ru}\n${(c.examples||[]).join('\n')}`);
+    e.target.textContent = 'Скопировано'; setTimeout(()=> e.target.textContent = 'Скопировать', 900);
+  }));
+}
+function renderPractice(chunks){
+  if(!chunks.length) return;
+  state.activePracticeIndex = Math.min(state.activePracticeIndex, chunks.length-1);
+  const c = chunks[state.activePracticeIndex];
+  $('practiceCount').textContent = `${state.activePracticeIndex+1} / ${chunks.length}`;
+  $('practiceRu').textContent = c.ru;
+  $('practiceAnswer').textContent = c.en;
+  $('practiceExamples').innerHTML = (c.examples||[]).map(x => `<div>→ ${escapeHtml(x)}</div>`).join('');
+  $('practiceAnswerBox').hidden = true;
+  $('ownExample').value = localStorage.getItem(key('example', chunkId(c, state.activePracticeIndex))) || '';
+  $('showAnswerBtn').onclick = () => { $('practiceAnswerBox').hidden = false; };
+  $('saveExampleBtn').onclick = () => { localStorage.setItem(key('example', chunkId(c, state.activePracticeIndex)), $('ownExample').value); $('saveExampleBtn').textContent='Сохранено'; setTimeout(()=> $('saveExampleBtn').textContent='Сохранить пример', 900); };
+  $('knowPracticeBtn').onclick = () => { localStorage.setItem(key('known', chunkId(c, state.activePracticeIndex)), '1'); nextPractice(chunks.length); };
+  $('againPracticeBtn').onclick = () => nextPractice(chunks.length);
+  $('prevPracticeBtn').onclick = () => { state.activePracticeIndex = (state.activePracticeIndex - 1 + chunks.length) % chunks.length; renderPractice(chunks); };
+  $('nextPracticeBtn').onclick = () => nextPractice(chunks.length);
+}
+function nextPractice(len){ state.activePracticeIndex = (state.activePracticeIndex + 1) % len; render(); }
+function renderCustom(){
+  const list = $('customList'); list.innerHTML='';
+  const items = getCustomChunks().filter(c => c.topic === state.topic && Number(c.week) === state.week);
+  $('customHint').textContent = items.length ? `Добавлено в эту тему/неделю: ${items.length}` : 'Пока нет своих чанков в этой теме и неделе.';
+  items.forEach((c, idx)=>{
+    const el = document.createElement('div'); el.className='customItem';
+    el.innerHTML = `<strong>${escapeHtml(c.en)}</strong><span>${escapeHtml(c.ru)}</span><small>${escapeHtml(c.source || 'свой чанк')}</small><button class="ghost small" data-del="${idx}">Удалить</button>`;
+    list.appendChild(el);
+  });
+  list.querySelectorAll('[data-del]').forEach(btn => btn.addEventListener('click', e => deleteCustom(Number(e.target.dataset.del))));
+}
+function addCustomChunk(e){
+  e.preventDefault();
+  const en = $('customEn').value.trim();
+  const ru = $('customRu').value.trim();
+  const ex = $('customExample').value.trim();
+  const src = $('customSource').value.trim() || 'свой источник';
+  if(!en || !ru) return;
+  const items = getCustomChunks();
+  items.push({topic:state.topic, week:state.week, en, ru, examples: ex ? [ex] : [], source: src, createdAt: new Date().toISOString()});
+  setCustomChunks(items);
+  e.target.reset();
+  render();
+}
+function deleteCustom(localIdx){
+  const items = getCustomChunks();
+  const filtered = items.filter(c => c.topic === state.topic && Number(c.week) === state.week);
+  const target = filtered[localIdx];
+  const idx = items.findIndex(c => c.createdAt === target.createdAt && c.en === target.en);
+  if(idx >= 0) items.splice(idx,1);
+  setCustomChunks(items); render();
+}
+function clearCurrentCustom(){
+  if(!confirm('Удалить свои чанки только из текущей темы и недели?')) return;
+  setCustomChunks(getCustomChunks().filter(c => !(c.topic === state.topic && Number(c.week) === state.week)));
+  render();
+}
+function resetWeekProgress(){
+  if(!confirm('Сбросить отметки “Знаю” и свои примеры для текущей недели?')) return;
+  const chunks = selectWeeklyChunks();
+  chunks.forEach((c,i)=>{
+    localStorage.removeItem(key('known', chunkId(c,i)));
+    localStorage.removeItem(key('example', chunkId(c,i)));
+  });
+  render();
+}
+function exportData(){
+  const payload = {version:1, exportedAt:new Date().toISOString(), customChunks:getCustomChunks()};
+  const blob = new Blob([JSON.stringify(payload,null,2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download='chunk-trainer-data.json'; a.click(); URL.revokeObjectURL(url);
+}
+function importData(e){
+  const file = e.target.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try{
+      const obj = JSON.parse(reader.result);
+      const incoming = obj.customChunks || [];
+      if(!Array.isArray(incoming)) throw new Error('bad');
+      setCustomChunks(getCustomChunks().concat(incoming));
+      render();
+    }catch(err){ alert('Не удалось импортировать файл.'); }
+  };
+  reader.readAsText(file);
+}
+function escapeHtml(s){ return String(s||'').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch])); }
+
+document.addEventListener('DOMContentLoaded', () => { initControls(); render(); });
+
+  </script>
+</body>
+</html>
