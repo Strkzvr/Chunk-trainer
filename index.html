@@ -45,7 +45,7 @@
 <body>
 <div class="app">
   <header>
-    <div class="brand"><h1>Chunk Trainer</h1><p>Английский через готовые фразы: сегодня — 5 минут, неделя — 15 чанков, закрепление — через свои примеры и повторения.</p></div>
+    <div class="brand"><h1>Chunk Trainer</h1><p>Английский через чанки: больше шаблонов-конструкторов, готовые фразы для ситуаций и умные повторения.</p></div>
     <div class="badge">Офлайн · PWA · v5 · packs</div>
   </header>
   <div class="layout">
@@ -58,7 +58,7 @@
       <div class="progress"><div id="progressBar"></div></div>
       <div class="tabs"><button data-view="today">Сегодня</button><button data-view="week">Неделя</button><button data-view="trainer">Тренировка</button><button data-view="custom">Мои чанки</button><button data-view="son">С Тёмой</button><button data-view="settings">Данные</button></div>
       <button class="btn danger full" id="resetWeekBtn" style="margin-top:12px">Сбросить неделю</button>
-      <div class="note"><b>Как теперь работает:</b><br>сначала вспоминаешь по русской подсказке, потом переворачиваешь карточку, слушаешь звук, пишешь свой пример и только после этого отмечаешь «Знаю». Сложные фразы сами попадают в повтор.</div>
+      <div class="note"><b>Как теперь работает:</b><br>сначала вспоминаешь по русской подсказке, потом переворачиваешь карточку, слушаешь звук. Для конструкторов пишешь свой пример-подстановку, а для готовых фраз — ситуацию или короткий вариант.</div>
     </aside>
     <main class="main">
       <section class="panel hero"><div><h2 id="topicTitle">Тема</h2><p id="weekTitle">Неделя</p></div><div class="badge" id="todayBadge">Сегодня</div></section>
@@ -67,7 +67,7 @@
         <div class="sectionTitle"><div><h3>Сегодняшняя тренировка</h3><p id="todayText"></p></div><button class="btn primary" id="startTodayBtn">Учить сегодня</button></div>
         <div class="grid2"><div class="task"><h4>Новые / плановые чанки</h4><p id="todayPlanText"></p><div class="chips" id="todayChips" style="margin-top:10px"></div></div><div class="task"><h4>Повторить сегодня</h4><p id="dueText"></p><div class="chips" id="dueChips" style="margin-top:10px"></div></div></div>
         <div class="grid2" style="margin-top:14px"><div class="task"><h4>Серия и выполнение</h4><p id="streakText"></p><div class="actions"><button class="btn primary small" id="doneTodayBtn">Отметить день выполненным</button></div></div><div class="task"><h4>Быстрые режимы</h4><p>Открыл — 3 минуты — повторил только самое важное.</p><div class="actions"><button class="btn primary small" id="quickRepeatBtn">Быстрый повтор 3 минуты</button><button class="btn ghost small" id="noExamplesBtn">Без своих примеров</button></div></div></div>
-        <div class="grid3" style="margin-top:14px"><div class="task"><h4>1. Вспомни</h4><p>Смотри на русский вариант и попробуй сказать по-английски до переворота карточки.</p></div><div class="task"><h4>2. Проговори</h4><p>Нажми 🔊 и повтори вслух 3 раза. Не гонись за скоростью.</p></div><div class="task"><h4>3. Свой пример</h4><p>Запиши пример из жизни. Без него чанк не считается выученным.</p></div></div>
+        <div class="grid3" style="margin-top:14px"><div class="task"><h4>1. Вспомни</h4><p>Смотри на русский вариант и попробуй сказать по-английски до переворота карточки.</p></div><div class="task"><h4>2. Проговори</h4><p>Нажми 🔊 и повтори вслух 3 раза. Не гонись за скоростью.</p></div><div class="task"><h4>3. Закрепи</h4><p>Для конструктора запиши свой пример. Для готовой фразы достаточно понять ситуацию, где ты её используешь.</p></div></div>
       </section>
 
       <section id="weekView" class="view"><div class="panel" style="padding:18px"><div class="sectionTitle"><div><h3>15 чанков недели</h3><p>Здесь можно посмотреть весь набор недели, послушать фразы и увидеть статусы.</p></div><button class="btn ghost" id="startAllBtn">Тренировать все</button></div><div class="task" style="margin-bottom:14px"><h4>Мини-диалог недели</h4><p id="dialogueText"></p><div class="actions"><button class="btn ghost small" id="speakDialogueBtn">🔊 Прочитать диалог</button><button class="btn primary small" id="dialogueTrainBtn">Тренировать фразы из диалога</button></div></div><div id="weekList" class="cardList"></div></div></section>
@@ -79,8 +79,8 @@
             <div class="trainerTop"><span id="trainerDeckName">Сегодня</span><span id="trainerCount">0 / 0</span></div>
             <p class="prompt" id="trainerPrompt">Нет карточек</p>
             <button class="btn primary" id="flipBtn">Показать английский</button>
-            <div class="answer" id="answerBox" hidden><h3 id="trainerAnswer"></h3><div id="trainerExamples" class="examples"></div><button class="btn ghost small" id="speakTrainerBtn">🔊 Произнести</button></div>
-            <label for="ownExample">Свой пример — обязателен для «Знаю»</label><textarea id="ownExample" placeholder="Например появится по текущему чанку"></textarea>
+            <div class="answer" id="answerBox" hidden><h3 id="trainerAnswer"></h3><div id="trainerExamples" class="examples"></div><div id="trainerUseHint" class="note" style="margin:10px 0 0"></div><button class="btn ghost small" id="speakTrainerBtn">🔊 Произнести</button></div>
+            <label for="ownExample" id="ownExampleLabel">Свой пример / ситуация</label><textarea id="ownExample" placeholder="Например появится по текущему чанку"></textarea>
             <div class="statusHint" id="statusHint"></div>
             <div class="trainerBtns"><button class="btn ghost" id="prevBtn">← Назад</button><button class="btn" id="repeatBtn">Повторить</button><button class="btn danger" id="hardBtn">Сложно</button><button class="btn primary" id="knowBtn">Знаю</button><button class="btn ghost" id="nextBtn">Дальше →</button></div>
           </div>
@@ -190,7 +190,7 @@ function loadJSON(name,fallback){try{return JSON.parse(localStorage.getItem(LS_P
 function todayIndex(){return (new Date().getDay()+6)%7}
 function localDateKey(d=new Date()){const y=d.getFullYear(); const m=String(d.getMonth()+1).padStart(2,'0'); const day=String(d.getDate()).padStart(2,'0'); return `${y}-${m}-${day}`}
 function isoToday(offset=0){const d=new Date(); d.setDate(d.getDate()+offset); return localDateKey(d)}
-function topicKeys(){const order=['universal','travel','daily','cafe','smalltalk','school','cars','bbq','games','minecraft','clash']; const base=order.filter(k=>DATA[k]).concat(Object.keys(DATA).filter(k=>!order.includes(k))); const packs=Object.keys(externalPacks||{}).filter(k=>!base.includes(k)); return base.concat(packs)}
+function topicKeys(){const order=['universal','travel','daily','cafe','smalltalk','school','cars','bbq','games','minecraft','clash']; const preferredPacks=['pack-constructors','pack-communication','pack-daily','pack-travel','pack-cafe-service','pack-small-talk']; const base=order.filter(k=>DATA[k]).concat(Object.keys(DATA).filter(k=>!order.includes(k))); const packKeys=Object.keys(externalPacks||{}).filter(k=>!base.includes(k)); const packs=preferredPacks.filter(k=>packKeys.includes(k)).concat(packKeys.filter(k=>!preferredPacks.includes(k))); return base.concat(packs)}
 function getTopicData(key){return DATA[key] || (externalPacks&&externalPacks[key]) || null}
 function slug(s){return String(s).toLowerCase().replace(/[^a-z0-9а-яё]+/gi,'-').replace(/(^-|-$)/g,'')}
 function normalizeChunk(raw,topic,idx,isCustom=false){
@@ -199,7 +199,24 @@ function normalizeChunk(raw,topic,idx,isCustom=false){
   const examples = Array.isArray(raw.examples) ? raw.examples : (Array.isArray(raw[2]) ? raw[2] : (raw.example ? [raw.example] : []));
   const source = raw.source || raw[3] || (externalPacks&&externalPacks[topic] ? 'внешний пакет' : 'стартовая база');
   const id = isCustom ? raw.id : (raw.id || `${topic}-${idx}-${slug(en).slice(0,42)}`);
-  return {id, topic, en, ru, examples, source, level:raw.level||'', priority:raw.priority||'', custom:!!isCustom}
+  const kind = raw.kind || raw.type || inferKind(en, source, raw);
+  const pattern = raw.pattern || raw.frame || (kind==='constructor' ? en : '');
+  return {id, topic, en, ru, examples, source, level:raw.level||'', priority:raw.priority||'', kind, pattern, custom:!!isCustom}
+}
+function inferKind(en, source='', raw={}){
+  const s=String(en||''); const src=String(source||'').toLowerCase();
+  if(raw.kind||raw.type) return raw.kind||raw.type;
+  if(s.includes('...') || src.includes('конструктор') || src.includes('каркас')) return 'constructor';
+  if(src.includes('collocation') || src.includes('словосочет')) return 'collocation';
+  return 'fixed';
+}
+function kindLabel(kind){return {constructor:'конструктор',fixed:'готовая фраза',collocation:'словосочетание'}[kind||'fixed']||'фраза'}
+function needsOwnExample(c){return c && (c.kind==='constructor' || c.kind==='collocation')}
+function useHint(c){
+  if(!c) return '';
+  if(c.kind==='constructor') return `<b>Тип:</b> конструктор. Подставь своё слово или действие и напиши 1 свою фразу. Например: <span>${escapeHtml((c.examples&&c.examples[0])||c.en.replace('...','something'))}</span>`;
+  if(c.kind==='collocation') return `<b>Тип:</b> словосочетание. Сделай короткое предложение с этой связкой.`;
+  return `<b>Тип:</b> готовая фраза. Её можно выучить целиком. В поле ниже можешь написать ситуацию, где она пригодится, или короткий вариант. Для «Знаю» это необязательно.`;
 }
 function getTopicChunks(topic){
   if(topic==='mixed'){
@@ -247,14 +264,17 @@ function renderStats(){const arr=weeklyChunks(); const counts={known:0,repeat:0,
 function renderToday(){const p=DAY_PLANS[todayIndex()]; const today=currentPlanChunks(); const due=dueChunks(); $('todayText').textContent=`${p.name}: ${p.title}. ${p.detail}`; $('todayPlanText').textContent=today.length?`Сегодня по плану: ${today.length} фраз.`:'Сегодня нет плановых фраз.'; renderChips('todayChips',today,'green'); $('dueText').textContent=due.length?`Есть ${due.length} фраз на повтор.`:'Нет долгов по повторению. Можно идти по плану.'; renderChips('dueChips',due,due.length?'orange':'green'); $('streakText').textContent=todayDone()?`Сегодня уже отмечено. Серия: ${learningLog.streak||0} дн.`:`Сегодня ещё не отмечено. Серия: ${learningLog.streak||0} дн.`}
 function renderChips(id,arr,cls){const box=$(id); box.innerHTML=''; if(!arr.length){const el=document.createElement('span'); el.className='chip green'; el.textContent='чисто'; box.appendChild(el); return} arr.forEach((c,i)=>{const el=document.createElement('span'); el.className='chip '+cls; el.textContent=`${i+1}. ${c.en}`; box.appendChild(el)})}
 function renderWeek(){const box=$('weekList'); $('dialogueText').innerHTML=escapeHtml(dialogueText()).replace(/\n/g,'<br>'); box.innerHTML=''; weeklyChunks().forEach((c,i)=>box.appendChild(chunkCard(c,i)))}
-function chunkCard(c,i){const st=stateOf(c.id); const el=document.createElement('article'); el.className='chunkCard '+(st.status||'new'); el.innerHTML=`<div class="chunkTop"><span class="num">${i+1}</span><span class="source">${escapeHtml(c.source)} · ${statusLabel(st.status)}</span></div><h3>${escapeHtml(c.en)}</h3><p class="ru">${escapeHtml(c.ru)}</p><div class="examples">${c.examples.map(x=>`<div>→ ${escapeHtml(x)}</div>`).join('')}</div>${st.example?`<div class="ownMini">Мой пример: ${escapeHtml(st.example)}</div>`:''}<div class="actions"><button class="btn ghost small" data-speak="${c.id}">🔊</button><button class="btn small" data-train="${c.id}">Тренировать</button><button class="btn danger small" data-hard="${c.id}">Сложно</button></div>`; el.querySelector('[data-speak]').onclick=()=>speak(c.en); el.querySelector('[data-train]').onclick=()=>{settings.view='trainer'; settings.deck='all'; trainer.index=Math.max(0,deckChunks().findIndex(x=>x.id===c.id)); trainer.flipped=false; persistSettings(); render()}; el.querySelector('[data-hard]').onclick=()=>{setState(c.id,{status:'hard',due:isoToday(0)}); render()}; return el}
+function chunkCard(c,i){const st=stateOf(c.id); const el=document.createElement('article'); el.className='chunkCard '+(st.status||'new'); el.innerHTML=`<div class="chunkTop"><span class="num">${i+1}</span><span class="source">${kindLabel(c.kind)} · ${escapeHtml(c.source)} · ${statusLabel(st.status)}</span></div><h3>${escapeHtml(c.en)}</h3><p class="ru">${escapeHtml(c.ru)}</p><div class="examples">${c.examples.map(x=>`<div>→ ${escapeHtml(x)}</div>`).join('')}</div>${st.example?`<div class="ownMini">Мой пример: ${escapeHtml(st.example)}</div>`:''}<div class="actions"><button class="btn ghost small" data-speak="${c.id}">🔊</button><button class="btn small" data-train="${c.id}">Тренировать</button><button class="btn danger small" data-hard="${c.id}">Сложно</button></div>`; el.querySelector('[data-speak]').onclick=()=>speak(c.en); el.querySelector('[data-train]').onclick=()=>{settings.view='trainer'; settings.deck='all'; trainer.index=Math.max(0,deckChunks().findIndex(x=>x.id===c.id)); trainer.flipped=false; persistSettings(); render()}; el.querySelector('[data-hard]').onclick=()=>{setState(c.id,{status:'hard',due:isoToday(0)}); render()}; return el}
 function examplePlaceholder(c){
+  if(!c) return 'Например появится по текущему чанку';
   const base = (c.examples && c.examples.length) ? c.examples[0] : c.en.replace('...', 'something today.');
-  return 'Например: ' + base;
+  if(c.kind==='constructor') return 'Напиши свою подстановку: ' + base;
+  if(c.kind==='collocation') return 'Составь своё предложение: ' + base;
+  return 'Можно написать ситуацию: в отеле, если говорят быстро / или вариант: ' + base;
 }
-function renderTrainer(){const arr=deckChunks(); document.querySelectorAll('[data-deck]').forEach(b=>{b.className='btn small '+(b.dataset.deck===settings.deck?'primary':'ghost')}); $('trainerDeckName').textContent={'today':'Сегодня','quick':'Быстрый повтор 3 минуты','due':'Повтор','noexamples':'Без своих примеров','all':'Вся неделя','hard':'Сложные'}[settings.deck]||'Тренировка'; if(!arr.length){$('trainerCount').textContent='0 / 0'; $('trainerPrompt').textContent='Нет карточек для этого режима'; $('answerBox').hidden=true; $('ownExample').value=''; $('ownExample').placeholder='Например: I am going to practice today.'; $('statusHint').textContent=''; return} trainer.index=(trainer.index+arr.length)%arr.length; const c=arr[trainer.index]; const st=stateOf(c.id); $('trainerCount').textContent=`${trainer.index+1} / ${arr.length}`; $('trainerPrompt').textContent=c.ru; $('trainerAnswer').textContent=c.en; $('trainerExamples').innerHTML=c.examples.map(x=>`<div>→ ${escapeHtml(x)}</div>`).join(''); $('answerBox').hidden=!trainer.flipped; $('flipBtn').textContent=trainer.flipped?'Скрыть ответ':'Показать английский'; $('ownExample').value=st.example||''; $('ownExample').placeholder=examplePlaceholder(c); $('statusHint').textContent=st.status==='known'?'Уже отмечено как «Знаю».':st.status==='hard'?'Отмечено как сложное.':st.status==='repeat'?'Стоит на повторении.':''}
+function renderTrainer(){const arr=deckChunks(); document.querySelectorAll('[data-deck]').forEach(b=>{b.className='btn small '+(b.dataset.deck===settings.deck?'primary':'ghost')}); $('trainerDeckName').textContent={'today':'Сегодня','quick':'Быстрый повтор 3 минуты','due':'Повтор','noexamples':'Без своих примеров','all':'Вся неделя','hard':'Сложные'}[settings.deck]||'Тренировка'; if(!arr.length){$('trainerCount').textContent='0 / 0'; $('trainerPrompt').textContent='Нет карточек для этого режима'; $('answerBox').hidden=true; $('ownExample').value=''; $('ownExample').placeholder='Например: I am going to practice today.'; $('statusHint').textContent=''; if($('ownExampleLabel')) $('ownExampleLabel').textContent='Свой пример / ситуация'; if($('trainerUseHint')) $('trainerUseHint').innerHTML=''; return} trainer.index=(trainer.index+arr.length)%arr.length; const c=arr[trainer.index]; const st=stateOf(c.id); $('trainerCount').textContent=`${trainer.index+1} / ${arr.length}`; $('trainerPrompt').textContent=c.ru; $('trainerAnswer').textContent=c.en; $('trainerExamples').innerHTML=c.examples.map(x=>`<div>→ ${escapeHtml(x)}</div>`).join(''); $('trainerUseHint').innerHTML=useHint(c); $('answerBox').hidden=!trainer.flipped; $('flipBtn').textContent=trainer.flipped?'Скрыть ответ':'Показать английский'; $('ownExampleLabel').textContent=needsOwnExample(c)?'Свой пример — обязателен для «Знаю»':'Моя ситуация / вариант — можно оставить пустым'; $('ownExample').value=st.example||''; $('ownExample').placeholder=examplePlaceholder(c); $('statusHint').textContent=st.status==='known'?'Уже отмечено как «Знаю».':st.status==='hard'?'Отмечено как сложное.':st.status==='repeat'?'Стоит на повторении.':''}
 function moveTrainer(delta){const arr=deckChunks(); if(!arr.length)return; trainer.index=(trainer.index+delta+arr.length)%arr.length; trainer.flipped=false; renderTrainer()}
-function markCurrent(status){const arr=deckChunks(); const c=arr[trainer.index]; if(!c)return; const ex=$('ownExample').value.trim(); if(status==='known' && !ex){$('statusHint').textContent='Сначала напиши свой пример. Так чанк лучше закрепится.'; $('ownExample').focus(); return} const patch={status,example:ex||stateOf(c.id).example||'',reps:(stateOf(c.id).reps||0)+1}; if(status==='known') patch.due=isoToday(7); if(status==='repeat') patch.due=isoToday(1); if(status==='hard') patch.due=isoToday(0); setState(c.id,patch); recordPractice(); renderStats(); moveTrainer(1)}
+function markCurrent(status){const arr=deckChunks(); const c=arr[trainer.index]; if(!c)return; const ex=$('ownExample').value.trim(); if(status==='known' && needsOwnExample(c) && !ex){$('statusHint').textContent='Для конструктора сначала напиши свою фразу-подстановку. Для готовых фраз это необязательно.'; $('ownExample').focus(); return} const patch={status,example:ex||stateOf(c.id).example||'',reps:(stateOf(c.id).reps||0)+1}; if(status==='known') patch.due=isoToday(7); if(status==='repeat') patch.due=isoToday(1); if(status==='hard') patch.due=isoToday(0); setState(c.id,patch); recordPractice(); renderStats(); moveTrainer(1)}
 function statusLabel(s){return {known:'знаю',repeat:'повторить',hard:'сложно',new:'новый'}[s||'new']}
 function resetWeek(){if(!confirm('Сбросить статусы и свои примеры у текущей недели?'))return; weeklyChunks().forEach(c=>delete states[c.id]); saveJSON('states',states); render()}
 function renderCustom(){const arr=weeklyCustom(); $('customHint').innerHTML=arr.length?`В этой теме и неделе своих чанков: <b>${arr.length}</b>`:'Пока нет своих чанков в этой теме и неделе.'; const box=$('customList'); box.innerHTML=''; arr.forEach((c,i)=>{const el=document.createElement('div'); el.className='customItem'; el.innerHTML=`<strong>${escapeHtml(c.en)}</strong><span>${escapeHtml(c.ru)}</span><small>${escapeHtml(c.source)}</small><button class="btn danger small">Удалить</button>`; el.querySelector('button').onclick=()=>{customChunks=customChunks.filter(x=>x.id!==c.id); saveJSON('customChunks',customChunks); render()}; box.appendChild(el)})}
@@ -294,7 +314,7 @@ function normalizePack(pack,fallbackId){
     const key=(c.en+'|'+c.ru).toLowerCase();
     if(seen.has(key)) return;
     seen.add(key);
-    chunks.push({id:raw.id||`${id}-${i}-${slug(c.en).slice(0,42)}`, en:c.en, ru:c.ru, examples:c.examples, source:c.source||pack.title||'пакет чанков', level:c.level||raw.level||'', priority:c.priority||raw.priority||''});
+    chunks.push({id:raw.id||`${id}-${i}-${slug(c.en).slice(0,42)}`, en:c.en, ru:c.ru, examples:c.examples, source:c.source||pack.title||'пакет чанков', level:c.level||raw.level||'', priority:c.priority||raw.priority||'', kind:c.kind, pattern:c.pattern});
   });
   return {title:pack.title||id, emoji:pack.emoji||'📦', description:pack.description||'', version:pack.version||1, external:true, chunks};
 }
