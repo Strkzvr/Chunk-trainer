@@ -1,0 +1,449 @@
+{
+  "id": "pack-communication",
+  "title": "Общение: главный курс",
+  "emoji": "💬",
+  "description": "Самые полезные фразы для обычного разговора, просьб, уточнений, объяснений и мнения.",
+  "version": 1,
+  "chunks": [
+    {
+      "en": "Could you help me with this?",
+      "ru": "Можете помочь мне с этим?",
+      "examples": [
+        "Could you help me with this form?",
+        "Could you help me with this problem?"
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Could you say that again?",
+      "ru": "Можете повторить?",
+      "examples": [
+        "Could you say that again, please?",
+        "Sorry, could you say that again?"
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Could you speak a little slower?",
+      "ru": "Можете говорить немного медленнее?",
+      "examples": [
+        "Could you speak a little slower, please?",
+        "I am learning English. Could you speak a little slower?"
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I don't understand this part.",
+      "ru": "Я не понимаю эту часть.",
+      "examples": [
+        "I don't understand this part of the message.",
+        "I don't understand this part of the form."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "What does it mean?",
+      "ru": "Что это значит?",
+      "examples": [
+        "What does this word mean?",
+        "What does this sentence mean?"
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "What do you mean by that?",
+      "ru": "Что вы имеете в виду?",
+      "examples": [
+        "What do you mean by that exactly?",
+        "Sorry, what do you mean by that?"
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can you give me an example?",
+      "ru": "Можете привести пример?",
+      "examples": [
+        "Can you give me a simple example?",
+        "Can you give me an example of how it works?"
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Let me think for a second.",
+      "ru": "Дайте мне секунду подумать.",
+      "examples": [
+        "Let me think for a second before I answer.",
+        "Let me think for a second, please."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Let me check and get back to you.",
+      "ru": "Я проверю и вернусь с ответом.",
+      "examples": [
+        "Let me check and get back to you today.",
+        "Let me check and get back to you with the details."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'm not sure about that.",
+      "ru": "Я не уверен насчёт этого.",
+      "examples": [
+        "I'm not sure about that yet.",
+        "I'm not sure about that option."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I think this is a good idea.",
+      "ru": "Думаю, это хорошая идея.",
+      "examples": [
+        "I think this is a good idea for us.",
+        "I think this is a good idea, but we need time."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'm not sure it's a good idea.",
+      "ru": "Я не уверен, что это хорошая идея.",
+      "examples": [
+        "I'm not sure it's a good idea right now.",
+        "I'm not sure it's a good idea for my son."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "That makes sense.",
+      "ru": "Это логично.",
+      "examples": [
+        "That makes sense to me.",
+        "Yes, that makes sense."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "That doesn't make sense to me.",
+      "ru": "Для меня это нелогично.",
+      "examples": [
+        "That doesn't make sense to me yet.",
+        "That doesn't make sense to me because of the price."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "The main thing is...",
+      "ru": "Главное — ...",
+      "examples": [
+        "The main thing is to start speaking.",
+        "The main thing is regular practice."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "The problem is...",
+      "ru": "Проблема в том, что...",
+      "examples": [
+        "The problem is the timing.",
+        "The problem is that I don't have enough time."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "The point is...",
+      "ru": "Суть в том, что...",
+      "examples": [
+        "The point is we need a simple system.",
+        "The point is not to learn too many words at once."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "In other words...",
+      "ru": "Другими словами...",
+      "examples": [
+        "In other words, we need more practice.",
+        "In other words, this is not urgent."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "For example...",
+      "ru": "Например...",
+      "examples": [
+        "For example, we can start with travel phrases.",
+        "For example, I can practice for ten minutes."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "It depends on...",
+      "ru": "Это зависит от...",
+      "examples": [
+        "It depends on the situation.",
+        "It depends on how much time we have."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'd rather...",
+      "ru": "Я бы скорее...",
+      "examples": [
+        "I'd rather start with useful phrases.",
+        "I'd rather do it tomorrow."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I prefer...",
+      "ru": "Я предпочитаю...",
+      "examples": [
+        "I prefer simple examples.",
+        "I prefer learning in small steps."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I agree with you.",
+      "ru": "Я с вами согласен.",
+      "examples": [
+        "I agree with you on this point.",
+        "I agree with you, it is important."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I don't agree with that.",
+      "ru": "Я с этим не согласен.",
+      "examples": [
+        "I don't agree with that idea.",
+        "I don't agree with that approach."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I see your point.",
+      "ru": "Я понимаю вашу мысль.",
+      "examples": [
+        "I see your point, but I need time.",
+        "I see your point and I agree."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can we do it this way?",
+      "ru": "Мы можем сделать это так?",
+      "examples": [
+        "Can we do it this way instead?",
+        "Can we do it this way next time?"
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "What if we try another option?",
+      "ru": "А что если попробовать другой вариант?",
+      "examples": [
+        "What if we try another option first?",
+        "What if we try another option next week?"
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Let's start with the basics.",
+      "ru": "Давайте начнём с основ.",
+      "examples": [
+        "Let's start with the basics today.",
+        "Let's start with the basics and then add more."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "The next step is...",
+      "ru": "Следующий шаг — ...",
+      "examples": [
+        "The next step is to practice every day.",
+        "The next step is to make our own examples."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I need more time to think.",
+      "ru": "Мне нужно больше времени подумать.",
+      "examples": [
+        "I need more time to think about it.",
+        "I need more time to think before I decide."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'll let you know.",
+      "ru": "Я дам знать.",
+      "examples": [
+        "I'll let you know tomorrow.",
+        "I'll let you know when I decide."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "That works for me.",
+      "ru": "Мне подходит.",
+      "examples": [
+        "Tomorrow works for me.",
+        "This time works for me."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "That doesn't work for me.",
+      "ru": "Мне не подходит.",
+      "examples": [
+        "Monday doesn't work for me.",
+        "This option doesn't work for me."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can we move it to...?",
+      "ru": "Можем перенести это на...?",
+      "examples": [
+        "Can we move it to Friday?",
+        "Can we move it to next week?"
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'm trying to...",
+      "ru": "Я пытаюсь...",
+      "examples": [
+        "I'm trying to speak more English.",
+        "I'm trying to build a habit."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "It's hard for me to...",
+      "ru": "Мне сложно...",
+      "examples": [
+        "It's hard for me to speak quickly.",
+        "It's hard for me to remember new phrases."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "It's easier for me to...",
+      "ru": "Мне проще...",
+      "examples": [
+        "It's easier for me to learn phrases.",
+        "It's easier for me to practice in the morning."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I need to improve...",
+      "ru": "Мне нужно улучшить...",
+      "examples": [
+        "I need to improve my speaking.",
+        "I need to improve my pronunciation."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'm interested in...",
+      "ru": "Мне интересно / меня интересует...",
+      "examples": [
+        "I'm interested in learning English with my son.",
+        "I'm interested in this method."
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Could you explain the difference?",
+      "ru": "Можете объяснить разницу?",
+      "examples": [
+        "Could you explain the difference between these two words?",
+        "Could you explain the difference in simple English?"
+      ],
+      "source": "communication",
+      "level": "A1-A2",
+      "priority": "high"
+    }
+  ]
+}

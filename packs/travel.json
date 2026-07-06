@@ -1,0 +1,394 @@
+{
+  "id": "pack-travel",
+  "title": "Путешествия и заграница",
+  "emoji": "✈️",
+  "description": "Аэропорт, отель, транспорт, город, проблемы, покупки в поездке.",
+  "version": 1,
+  "chunks": [
+    {
+      "en": "I'd like to book a room.",
+      "ru": "Я бы хотел забронировать номер.",
+      "examples": [
+        "I'd like to book a room for two nights.",
+        "I'd like to book a room for my family."
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I have a reservation.",
+      "ru": "У меня бронь.",
+      "examples": [
+        "I have a reservation under Zarapin.",
+        "I have a reservation for three nights."
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Could we check in early?",
+      "ru": "Можем заселиться раньше?",
+      "examples": [
+        "Could we check in early if the room is ready?",
+        "Could we check in early today?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "What time is check-out?",
+      "ru": "Во сколько выезд?",
+      "examples": [
+        "What time is check-out tomorrow?",
+        "What time is check-out on Sunday?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Is breakfast included?",
+      "ru": "Завтрак включён?",
+      "examples": [
+        "Is breakfast included in the price?",
+        "Is breakfast included for children?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can we leave our bags here?",
+      "ru": "Можно оставить сумки здесь?",
+      "examples": [
+        "Can we leave our bags here until check-in?",
+        "Can we leave our bags here for a few hours?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Where can I find a taxi?",
+      "ru": "Где я могу найти такси?",
+      "examples": [
+        "Where can I find a taxi near here?",
+        "Where can I find a taxi at the airport?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Could you call a taxi for us?",
+      "ru": "Можете вызвать нам такси?",
+      "examples": [
+        "Could you call a taxi for us, please?",
+        "Could you call a taxi to the hotel?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I need to get to the city center.",
+      "ru": "Мне нужно добраться до центра города.",
+      "examples": [
+        "I need to get to the city center by metro.",
+        "I need to get to the city center before noon."
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "How long does it take to get there?",
+      "ru": "Сколько времени туда добираться?",
+      "examples": [
+        "How long does it take to get there by taxi?",
+        "How long does it take to get there on foot?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Is it far from here?",
+      "ru": "Это далеко отсюда?",
+      "examples": [
+        "Is it far from here by bus?",
+        "Is it far from here on foot?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Could you show me on the map?",
+      "ru": "Можете показать на карте?",
+      "examples": [
+        "Could you show me on the map, please?",
+        "Could you show me where we are?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Which platform do I need?",
+      "ru": "Какая мне нужна платформа?",
+      "examples": [
+        "Which platform do I need for this train?",
+        "Which platform do I need to go downtown?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Where is the entrance?",
+      "ru": "Где вход?",
+      "examples": [
+        "Where is the entrance to the museum?",
+        "Where is the entrance to the station?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Where is the exit?",
+      "ru": "Где выход?",
+      "examples": [
+        "Where is the exit from the station?",
+        "Where is the exit to the street?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can I pay by card?",
+      "ru": "Можно оплатить картой?",
+      "examples": [
+        "Can I pay by card here?",
+        "Can I pay by card on the bus?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Do I need a ticket?",
+      "ru": "Мне нужен билет?",
+      "examples": [
+        "Do I need a ticket for my son?",
+        "Do I need a ticket for this train?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Where can I buy tickets?",
+      "ru": "Где можно купить билеты?",
+      "examples": [
+        "Where can I buy tickets for the bus?",
+        "Where can I buy tickets online?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Our flight was delayed.",
+      "ru": "Наш рейс задержали.",
+      "examples": [
+        "Our flight was delayed by two hours.",
+        "Our flight was delayed, so we arrived late."
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Where is the baggage claim?",
+      "ru": "Где выдача багажа?",
+      "examples": [
+        "Where is the baggage claim area?",
+        "Where is the baggage claim for this flight?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "My luggage is missing.",
+      "ru": "Мой багаж пропал.",
+      "examples": [
+        "My luggage is missing. Can you help me?",
+        "My luggage is missing after the flight."
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I need help with my luggage.",
+      "ru": "Мне нужна помощь с багажом.",
+      "examples": [
+        "I need help with my luggage, please.",
+        "I need help with my luggage at the airport."
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Do you have free Wi-Fi?",
+      "ru": "У вас есть бесплатный Wi‑Fi?",
+      "examples": [
+        "Do you have free Wi-Fi in the room?",
+        "Do you have free Wi-Fi here?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "The Wi-Fi doesn't work.",
+      "ru": "Wi‑Fi не работает.",
+      "examples": [
+        "The Wi-Fi doesn't work in our room.",
+        "The Wi-Fi doesn't work on my phone."
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can you recommend a good place nearby?",
+      "ru": "Можете посоветовать хорошее место рядом?",
+      "examples": [
+        "Can you recommend a good place nearby for dinner?",
+        "Can you recommend a good place nearby for kids?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "We are looking for a quiet place.",
+      "ru": "Мы ищем тихое место.",
+      "examples": [
+        "We are looking for a quiet place to eat.",
+        "We are looking for a quiet place near the hotel."
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Is this area safe?",
+      "ru": "Этот район безопасный?",
+      "examples": [
+        "Is this area safe at night?",
+        "Is this area safe for walking?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'm here on vacation.",
+      "ru": "Я здесь в отпуске.",
+      "examples": [
+        "I'm here on vacation with my family.",
+        "I'm here on vacation for a week."
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "We are staying near the center.",
+      "ru": "Мы остановились недалеко от центра.",
+      "examples": [
+        "We are staying near the center for a few days.",
+        "We are staying near the center of the city."
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Could you take a photo of us?",
+      "ru": "Можете нас сфотографировать?",
+      "examples": [
+        "Could you take a photo of us, please?",
+        "Could you take a photo of us with this view?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can I have a receipt?",
+      "ru": "Можно чек?",
+      "examples": [
+        "Can I have a receipt, please?",
+        "Can I have a receipt for this payment?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I think there is a mistake.",
+      "ru": "Кажется, тут ошибка.",
+      "examples": [
+        "I think there is a mistake in the bill.",
+        "I think there is a mistake with the booking."
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can you help me with this problem?",
+      "ru": "Можете помочь мне с этой проблемой?",
+      "examples": [
+        "Can you help me with this problem at the hotel?",
+        "Can you help me with this problem, please?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I need a doctor.",
+      "ru": "Мне нужен врач.",
+      "examples": [
+        "I need a doctor, please.",
+        "I need a doctor for my son."
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Where is the nearest pharmacy?",
+      "ru": "Где ближайшая аптека?",
+      "examples": [
+        "Where is the nearest pharmacy around here?",
+        "Where is the nearest pharmacy open now?"
+      ],
+      "source": "travel",
+      "level": "A1-A2",
+      "priority": "high"
+    }
+  ]
+}

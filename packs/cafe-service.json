@@ -1,0 +1,339 @@
+{
+  "id": "pack-cafe-service",
+  "title": "Кафе, магазин, сервис",
+  "emoji": "🛒",
+  "description": "Заказ еды, покупки, размеры, возврат, оплата, просьбы в сервисе.",
+  "version": 1,
+  "chunks": [
+    {
+      "en": "Could I have the menu, please?",
+      "ru": "Можно меню, пожалуйста?",
+      "examples": [
+        "Could I have the menu, please?",
+        "Could I have the English menu, please?"
+      ],
+      "source": "cafe",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'd like to order...",
+      "ru": "Я бы хотел заказать...",
+      "examples": [
+        "I'd like to order a coffee.",
+        "I'd like to order this dish."
+      ],
+      "source": "cafe",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "What do you recommend?",
+      "ru": "Что вы рекомендуете?",
+      "examples": [
+        "What do you recommend for lunch?",
+        "What do you recommend for a child?"
+      ],
+      "source": "cafe",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Is it spicy?",
+      "ru": "Это острое?",
+      "examples": [
+        "Is it spicy or mild?",
+        "Is it too spicy for a child?"
+      ],
+      "source": "cafe",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Does it contain nuts?",
+      "ru": "Там есть орехи?",
+      "examples": [
+        "Does it contain nuts or dairy?",
+        "Does this dessert contain nuts?"
+      ],
+      "source": "cafe",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can I have it without...?",
+      "ru": "Можно это без...?",
+      "examples": [
+        "Can I have it without onions?",
+        "Can I have it without sauce?"
+      ],
+      "source": "cafe",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can we have the bill, please?",
+      "ru": "Можно счёт, пожалуйста?",
+      "examples": [
+        "Can we have the bill, please?",
+        "Can we have the bill when you have a moment?"
+      ],
+      "source": "cafe",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can I pay by card?",
+      "ru": "Можно оплатить картой?",
+      "examples": [
+        "Can I pay by card here?",
+        "Can I pay by card separately?"
+      ],
+      "source": "cafe",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can we pay separately?",
+      "ru": "Можно оплатить отдельно?",
+      "examples": [
+        "Can we pay separately, please?",
+        "Can we pay separately for these items?"
+      ],
+      "source": "cafe",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can I have a receipt?",
+      "ru": "Можно чек?",
+      "examples": [
+        "Can I have a receipt, please?",
+        "Can I have a receipt for this order?"
+      ],
+      "source": "service",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'm looking for...",
+      "ru": "Я ищу...",
+      "examples": [
+        "I'm looking for a jacket.",
+        "I'm looking for a gift."
+      ],
+      "source": "shopping",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Do you have this in another size?",
+      "ru": "У вас есть это в другом размере?",
+      "examples": [
+        "Do you have this in another size?",
+        "Do you have this in a larger size?"
+      ],
+      "source": "shopping",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Do you have this in another color?",
+      "ru": "У вас есть это в другом цвете?",
+      "examples": [
+        "Do you have this in another color?",
+        "Do you have this in black?"
+      ],
+      "source": "shopping",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can I try it on?",
+      "ru": "Можно примерить?",
+      "examples": [
+        "Can I try it on, please?",
+        "Can I try it on in the fitting room?"
+      ],
+      "source": "shopping",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Where are the fitting rooms?",
+      "ru": "Где примерочные?",
+      "examples": [
+        "Where are the fitting rooms, please?",
+        "Where are the fitting rooms in this store?"
+      ],
+      "source": "shopping",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "It's too small.",
+      "ru": "Это слишком маленькое.",
+      "examples": [
+        "It's too small for me.",
+        "It's too small, do you have a larger size?"
+      ],
+      "source": "shopping",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "It's too big.",
+      "ru": "Это слишком большое.",
+      "examples": [
+        "It's too big for me.",
+        "It's too big, do you have a smaller size?"
+      ],
+      "source": "shopping",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'll take it.",
+      "ru": "Я возьму это.",
+      "examples": [
+        "I'll take it, thank you.",
+        "I'll take it in this color."
+      ],
+      "source": "shopping",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'll think about it.",
+      "ru": "Я подумаю.",
+      "examples": [
+        "I'll think about it, thank you.",
+        "I'll think about it and come back later."
+      ],
+      "source": "shopping",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can I return it if it doesn't fit?",
+      "ru": "Можно вернуть, если не подойдёт?",
+      "examples": [
+        "Can I return it if it doesn't fit?",
+        "Can I return it within two weeks?"
+      ],
+      "source": "shopping",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'd like to return this.",
+      "ru": "Я бы хотел вернуть это.",
+      "examples": [
+        "I'd like to return this item.",
+        "I'd like to return this because it doesn't fit."
+      ],
+      "source": "service",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'd like to exchange this.",
+      "ru": "Я бы хотел обменять это.",
+      "examples": [
+        "I'd like to exchange this for another size.",
+        "I'd like to exchange this item."
+      ],
+      "source": "service",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "There is a problem with...",
+      "ru": "Есть проблема с...",
+      "examples": [
+        "There is a problem with this product.",
+        "There is a problem with the payment."
+      ],
+      "source": "service",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "It doesn't work properly.",
+      "ru": "Это работает неправильно.",
+      "examples": [
+        "It doesn't work properly after charging.",
+        "It doesn't work properly, can you check it?"
+      ],
+      "source": "service",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Could you check it, please?",
+      "ru": "Можете проверить это?",
+      "examples": [
+        "Could you check it, please?",
+        "Could you check the price, please?"
+      ],
+      "source": "service",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "How much does it cost?",
+      "ru": "Сколько это стоит?",
+      "examples": [
+        "How much does it cost with delivery?",
+        "How much does it cost in total?"
+      ],
+      "source": "shopping",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Is there a discount?",
+      "ru": "Есть скидка?",
+      "examples": [
+        "Is there a discount today?",
+        "Is there a discount for two items?"
+      ],
+      "source": "shopping",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can you show me something similar?",
+      "ru": "Можете показать что-то похожее?",
+      "examples": [
+        "Can you show me something similar but cheaper?",
+        "Can you show me something similar in another color?"
+      ],
+      "source": "shopping",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'm just looking, thank you.",
+      "ru": "Я просто смотрю, спасибо.",
+      "examples": [
+        "I'm just looking, thank you.",
+        "I'm just looking for now."
+      ],
+      "source": "shopping",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Do you deliver?",
+      "ru": "У вас есть доставка?",
+      "examples": [
+        "Do you deliver to this address?",
+        "Do you deliver on weekends?"
+      ],
+      "source": "service",
+      "level": "A1-A2",
+      "priority": "high"
+    }
+  ]
+}
