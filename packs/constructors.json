@@ -1,0 +1,1185 @@
+{
+  "id": "pack-constructors",
+  "title": "Конструкторы речи: главный курс",
+  "emoji": "🧱",
+  "description": "Шаблоны, в которые удобно подставлять свои слова: просьбы, планы, быт, путешествия, сервис и small talk.",
+  "version": 1,
+  "chunks": [
+    {
+      "en": "I need to...",
+      "ru": "Мне нужно...",
+      "examples": [
+        "I need to check the address.",
+        "I need to call you later."
+      ],
+      "source": "constructor: core",
+      "level": "A1",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I want to...",
+      "ru": "Я хочу...",
+      "examples": [
+        "I want to improve my English.",
+        "I want to try this option."
+      ],
+      "source": "constructor: core",
+      "level": "A1",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’m going to...",
+      "ru": "Я собираюсь...",
+      "examples": [
+        "I’m going to ask a question.",
+        "I’m going to book a hotel."
+      ],
+      "source": "constructor: future",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I have to...",
+      "ru": "Мне надо / я должен...",
+      "examples": [
+        "I have to leave early.",
+        "I have to work today."
+      ],
+      "source": "constructor: obligation",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’d like to...",
+      "ru": "Я бы хотел...",
+      "examples": [
+        "I’d like to book a table.",
+        "I’d like to ask a question."
+      ],
+      "source": "constructor: polite",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’d like...",
+      "ru": "Я бы хотел / мне бы...",
+      "examples": [
+        "I’d like a coffee, please.",
+        "I’d like a room for two nights."
+      ],
+      "source": "constructor: polite",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I can...",
+      "ru": "Я могу...",
+      "examples": [
+        "I can send it today.",
+        "I can meet you tomorrow."
+      ],
+      "source": "constructor: ability",
+      "level": "A1",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I can’t...",
+      "ru": "Я не могу...",
+      "examples": [
+        "I can’t hear you well.",
+        "I can’t open the file."
+      ],
+      "source": "constructor: ability",
+      "level": "A1",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I should...",
+      "ru": "Мне стоит...",
+      "examples": [
+        "I should practice more.",
+        "I should check the details."
+      ],
+      "source": "constructor: advice",
+      "level": "A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "I shouldn’t...",
+      "ru": "Мне не стоит...",
+      "examples": [
+        "I shouldn’t rush.",
+        "I shouldn’t spend too much time on this."
+      ],
+      "source": "constructor: advice",
+      "level": "A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’m trying to...",
+      "ru": "Я пытаюсь...",
+      "examples": [
+        "I’m trying to speak more slowly.",
+        "I’m trying to understand the system."
+      ],
+      "source": "constructor: process",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’m learning to...",
+      "ru": "Я учусь...",
+      "examples": [
+        "I’m learning to speak English.",
+        "I’m learning to explain my thoughts."
+      ],
+      "source": "constructor: learning",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’m ready to...",
+      "ru": "Я готов...",
+      "examples": [
+        "I’m ready to start.",
+        "I’m ready to discuss the details."
+      ],
+      "source": "constructor: readiness",
+      "level": "A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’m not ready to...",
+      "ru": "Я не готов...",
+      "examples": [
+        "I’m not ready to decide today.",
+        "I’m not ready to speak fast yet."
+      ],
+      "source": "constructor: readiness",
+      "level": "A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "I forgot to...",
+      "ru": "Я забыл...",
+      "examples": [
+        "I forgot to send the message.",
+        "I forgot to check the time."
+      ],
+      "source": "constructor: past",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I forgot how to...",
+      "ru": "Я забыл, как...",
+      "examples": [
+        "I forgot how to say this word.",
+        "I forgot how to use this phrase."
+      ],
+      "source": "constructor: learning",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I need more...",
+      "ru": "Мне нужно больше...",
+      "examples": [
+        "I need more time.",
+        "I need more practice."
+      ],
+      "source": "constructor: need",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I don’t need...",
+      "ru": "Мне не нужно...",
+      "examples": [
+        "I don’t need a bag.",
+        "I don’t need more time."
+      ],
+      "source": "constructor: need",
+      "level": "A1-A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "I have...",
+      "ru": "У меня есть...",
+      "examples": [
+        "I have a question.",
+        "I have a problem with my booking."
+      ],
+      "source": "constructor: possession",
+      "level": "A1",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I don’t have...",
+      "ru": "У меня нет...",
+      "examples": [
+        "I don’t have cash.",
+        "I don’t have much time."
+      ],
+      "source": "constructor: possession",
+      "level": "A1",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Could you...?, please",
+      "ru": "Вы могли бы...?",
+      "examples": [
+        "Could you help me, please?",
+        "Could you repeat that, please?"
+      ],
+      "source": "constructor: request",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Can you...?, please",
+      "ru": "Можете...?",
+      "examples": [
+        "Can you show me, please?",
+        "Can you send it to me, please?"
+      ],
+      "source": "constructor: request",
+      "level": "A1",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Can I...?, please",
+      "ru": "Можно мне...?",
+      "examples": [
+        "Can I pay by card, please?",
+        "Can I ask a question, please?"
+      ],
+      "source": "constructor: permission",
+      "level": "A1",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "May I...?",
+      "ru": "Можно мне...?",
+      "examples": [
+        "May I come in?",
+        "May I ask you something?"
+      ],
+      "source": "constructor: permission",
+      "level": "A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "Do you have...?",
+      "ru": "У вас есть...?",
+      "examples": [
+        "Do you have a table for two?",
+        "Do you have this in another size?"
+      ],
+      "source": "constructor: service",
+      "level": "A1",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Is there...?",
+      "ru": "Есть ли...?",
+      "examples": [
+        "Is there a toilet here?",
+        "Is there a bus stop nearby?"
+      ],
+      "source": "constructor: place",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Are there...?",
+      "ru": "Есть ли...?",
+      "examples": [
+        "Are there any rooms available?",
+        "Are there any cheaper options?"
+      ],
+      "source": "constructor: place",
+      "level": "A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "Where can I...?",
+      "ru": "Где я могу...?",
+      "examples": [
+        "Where can I buy a ticket?",
+        "Where can I find a taxi?"
+      ],
+      "source": "constructor: travel",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "How can I...?",
+      "ru": "Как я могу...?",
+      "examples": [
+        "How can I get there?",
+        "How can I change the booking?"
+      ],
+      "source": "constructor: travel",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "How do I...?",
+      "ru": "Как мне...?",
+      "examples": [
+        "How do I get to the station?",
+        "How do I use this machine?"
+      ],
+      "source": "constructor: how-to",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "How much is...?",
+      "ru": "Сколько стоит...?",
+      "examples": [
+        "How much is this ticket?",
+        "How much is delivery?"
+      ],
+      "source": "constructor: money",
+      "level": "A1",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "How much does it cost to...?",
+      "ru": "Сколько стоит...?",
+      "examples": [
+        "How much does it cost to get there?",
+        "How much does it cost to rent a car?"
+      ],
+      "source": "constructor: money",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "What time does... open?",
+      "ru": "Во сколько открывается...?",
+      "examples": [
+        "What time does the museum open?",
+        "What time does the shop open?"
+      ],
+      "source": "constructor: schedule",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "What time does... close?",
+      "ru": "Во сколько закрывается...?",
+      "examples": [
+        "What time does the kitchen close?",
+        "What time does the store close?"
+      ],
+      "source": "constructor: schedule",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "What time is...?",
+      "ru": "Во сколько...?",
+      "examples": [
+        "What time is breakfast?",
+        "What time is the meeting?"
+      ],
+      "source": "constructor: schedule",
+      "level": "A1",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "What does... mean?",
+      "ru": "Что значит...?",
+      "examples": [
+        "What does this word mean?",
+        "What does this sign mean?"
+      ],
+      "source": "constructor: learning",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "How do you say... in English?",
+      "ru": "Как сказать... по-английски?",
+      "examples": [
+        "How do you say ‘счёт’ in English?",
+        "How do you say this in English?"
+      ],
+      "source": "constructor: learning",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Could you tell me...?",
+      "ru": "Вы могли бы сказать мне...?",
+      "examples": [
+        "Could you tell me the price?",
+        "Could you tell me where the entrance is?"
+      ],
+      "source": "constructor: request",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Could you show me...?",
+      "ru": "Вы могли бы показать мне...?",
+      "examples": [
+        "Could you show me on the map?",
+        "Could you show me how it works?"
+      ],
+      "source": "constructor: request",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Could you write down...?",
+      "ru": "Вы могли бы записать...?",
+      "examples": [
+        "Could you write down the address?",
+        "Could you write down your email?"
+      ],
+      "source": "constructor: request",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I don’t understand...",
+      "ru": "Я не понимаю...",
+      "examples": [
+        "I don’t understand this part.",
+        "I don’t understand the question."
+      ],
+      "source": "constructor: clarification",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I don’t know how to...",
+      "ru": "Я не знаю, как...",
+      "examples": [
+        "I don’t know how to get there.",
+        "I don’t know how to explain it."
+      ],
+      "source": "constructor: clarification",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’m not sure about...",
+      "ru": "Я не уверен насчёт...",
+      "examples": [
+        "I’m not sure about the date.",
+        "I’m not sure about this option."
+      ],
+      "source": "constructor: uncertainty",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’m not sure if...",
+      "ru": "Я не уверен, что/если...",
+      "examples": [
+        "I’m not sure if it’s open today.",
+        "I’m not sure if I can come."
+      ],
+      "source": "constructor: uncertainty",
+      "level": "A2-B1",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "I think...",
+      "ru": "Я думаю...",
+      "examples": [
+        "I think this is better.",
+        "I think we should wait."
+      ],
+      "source": "constructor: opinion",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I don’t think...",
+      "ru": "Я не думаю, что...",
+      "examples": [
+        "I don’t think it’s a good idea.",
+        "I don’t think we have enough time."
+      ],
+      "source": "constructor: opinion",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I feel like...",
+      "ru": "Мне кажется / у меня ощущение, что...",
+      "examples": [
+        "I feel like I need more practice.",
+        "I feel like this option is better."
+      ],
+      "source": "constructor: opinion",
+      "level": "B1",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "It seems like...",
+      "ru": "Похоже, что...",
+      "examples": [
+        "It seems like it’s closed.",
+        "It seems like we’re in the wrong place."
+      ],
+      "source": "constructor: opinion",
+      "level": "A2-B1",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "The problem is...",
+      "ru": "Проблема в том, что...",
+      "examples": [
+        "The problem is the timing.",
+        "The problem is that I don’t understand."
+      ],
+      "source": "constructor: explanation",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "The main thing is...",
+      "ru": "Главное — ...",
+      "examples": [
+        "The main thing is safety.",
+        "The main thing is to practice every day."
+      ],
+      "source": "constructor: explanation",
+      "level": "A2-B1",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "The difference is...",
+      "ru": "Разница в том, что...",
+      "examples": [
+        "The difference is the size.",
+        "The difference is how it works."
+      ],
+      "source": "constructor: explanation",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "It depends on...",
+      "ru": "Это зависит от...",
+      "examples": [
+        "It depends on the weather.",
+        "It depends on how much time we have."
+      ],
+      "source": "constructor: explanation",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "It’s difficult to...",
+      "ru": "Сложно...",
+      "examples": [
+        "It’s difficult to understand fast speech.",
+        "It’s difficult to choose."
+      ],
+      "source": "constructor: explanation",
+      "level": "A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "It’s easy to...",
+      "ru": "Легко...",
+      "examples": [
+        "It’s easy to remember this phrase.",
+        "It’s easy to get there by taxi."
+      ],
+      "source": "constructor: explanation",
+      "level": "A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "Let’s...",
+      "ru": "Давай...",
+      "examples": [
+        "Let’s start.",
+        "Let’s go for a walk."
+      ],
+      "source": "constructor: daily",
+      "level": "A1",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Let’s not...",
+      "ru": "Давай не будем...",
+      "examples": [
+        "Let’s not rush.",
+        "Let’s not forget this."
+      ],
+      "source": "constructor: daily",
+      "level": "A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "We need to...",
+      "ru": "Нам нужно...",
+      "examples": [
+        "We need to leave soon.",
+        "We need to buy food."
+      ],
+      "source": "constructor: daily",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "We should...",
+      "ru": "Нам стоит...",
+      "examples": [
+        "We should check the time.",
+        "We should practice English."
+      ],
+      "source": "constructor: daily",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Don’t forget to...",
+      "ru": "Не забудь...",
+      "examples": [
+        "Don’t forget to take your phone.",
+        "Don’t forget to do your homework."
+      ],
+      "source": "constructor: daily",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Remember to...",
+      "ru": "Не забудь / помни, что нужно...",
+      "examples": [
+        "Remember to drink water.",
+        "Remember to call me."
+      ],
+      "source": "constructor: daily",
+      "level": "A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "Can you bring...?",
+      "ru": "Можешь принести...?",
+      "examples": [
+        "Can you bring me water?",
+        "Can you bring your backpack?"
+      ],
+      "source": "constructor: daily",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Can you take...?",
+      "ru": "Можешь взять...?",
+      "examples": [
+        "Can you take the keys?",
+        "Can you take this bag?"
+      ],
+      "source": "constructor: daily",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Can you pick up...?",
+      "ru": "Можешь забрать...?",
+      "examples": [
+        "Can you pick up the order?",
+        "Can you pick up Tema after school?"
+      ],
+      "source": "constructor: daily",
+      "level": "A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’m busy with...",
+      "ru": "Я занят...",
+      "examples": [
+        "I’m busy with work.",
+        "I’m busy with the app."
+      ],
+      "source": "constructor: daily",
+      "level": "A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’m tired of...",
+      "ru": "Я устал от...",
+      "examples": [
+        "I’m tired of waiting.",
+        "I’m tired of this noise."
+      ],
+      "source": "constructor: daily",
+      "level": "A2-B1",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’m worried about...",
+      "ru": "Я переживаю из-за...",
+      "examples": [
+        "I’m worried about the trip.",
+        "I’m worried about the schedule."
+      ],
+      "source": "constructor: daily",
+      "level": "A2-B1",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’m happy with...",
+      "ru": "Я доволен...",
+      "examples": [
+        "I’m happy with this result.",
+        "I’m happy with the hotel."
+      ],
+      "source": "constructor: daily",
+      "level": "A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’m not happy with...",
+      "ru": "Я недоволен...",
+      "examples": [
+        "I’m not happy with the service.",
+        "I’m not happy with this option."
+      ],
+      "source": "constructor: daily/service",
+      "level": "A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’m looking for...",
+      "ru": "Я ищу...",
+      "examples": [
+        "I’m looking for the entrance.",
+        "I’m looking for a taxi."
+      ],
+      "source": "constructor: travel",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’m here to...",
+      "ru": "Я здесь, чтобы...",
+      "examples": [
+        "I’m here to check in.",
+        "I’m here to pick up my order."
+      ],
+      "source": "constructor: travel/service",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’d like to book...",
+      "ru": "Я бы хотел забронировать...",
+      "examples": [
+        "I’d like to book a room.",
+        "I’d like to book a table for two."
+      ],
+      "source": "constructor: travel/service",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’d like to change...",
+      "ru": "Я бы хотел изменить...",
+      "examples": [
+        "I’d like to change my booking.",
+        "I’d like to change the date."
+      ],
+      "source": "constructor: travel/service",
+      "level": "A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’d like to cancel...",
+      "ru": "Я бы хотел отменить...",
+      "examples": [
+        "I’d like to cancel my reservation.",
+        "I’d like to cancel the order."
+      ],
+      "source": "constructor: travel/service",
+      "level": "A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "I need a ticket to...",
+      "ru": "Мне нужен билет до...",
+      "examples": [
+        "I need a ticket to Valencia.",
+        "I need a ticket to the city center."
+      ],
+      "source": "constructor: travel",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I need to get to...",
+      "ru": "Мне нужно добраться до...",
+      "examples": [
+        "I need to get to the airport.",
+        "I need to get to this address."
+      ],
+      "source": "constructor: travel",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Is it far from...?",
+      "ru": "Это далеко от...?",
+      "examples": [
+        "Is it far from here?",
+        "Is it far from the hotel?"
+      ],
+      "source": "constructor: travel",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "How long does it take to...?",
+      "ru": "Сколько времени занимает...?",
+      "examples": [
+        "How long does it take to get there?",
+        "How long does it take to walk there?"
+      ],
+      "source": "constructor: travel",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Can I pay by...?",
+      "ru": "Можно оплатить...?",
+      "examples": [
+        "Can I pay by card?",
+        "Can I pay by cash?"
+      ],
+      "source": "constructor: service",
+      "level": "A1",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Can I get...?",
+      "ru": "Можно мне получить...?",
+      "examples": [
+        "Can I get the bill, please?",
+        "Can I get a receipt?"
+      ],
+      "source": "constructor: service",
+      "level": "A1",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Can I try on...?",
+      "ru": "Можно примерить...?",
+      "examples": [
+        "Can I try on this jacket?",
+        "Can I try on these shoes?"
+      ],
+      "source": "constructor: shopping",
+      "level": "A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "Do you have this in...?",
+      "ru": "У вас есть это в...?",
+      "examples": [
+        "Do you have this in a larger size?",
+        "Do you have this in black?"
+      ],
+      "source": "constructor: shopping",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’m allergic to...",
+      "ru": "У меня аллергия на...",
+      "examples": [
+        "I’m allergic to nuts.",
+        "I’m allergic to seafood."
+      ],
+      "source": "constructor: cafe",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Without..., please",
+      "ru": "Без..., пожалуйста",
+      "examples": [
+        "Without onions, please.",
+        "Without sugar, please."
+      ],
+      "source": "constructor: cafe",
+      "level": "A1",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "With..., please",
+      "ru": "С..., пожалуйста",
+      "examples": [
+        "With milk, please.",
+        "With no ice, please."
+      ],
+      "source": "constructor: cafe",
+      "level": "A1",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Could we have...?, please",
+      "ru": "Можно нам...?",
+      "examples": [
+        "Could we have the menu, please?",
+        "Could we have some water, please?"
+      ],
+      "source": "constructor: cafe",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I ordered...",
+      "ru": "Я заказал...",
+      "examples": [
+        "I ordered a coffee.",
+        "I ordered this online."
+      ],
+      "source": "constructor: service",
+      "level": "A1-A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "There is a problem with...",
+      "ru": "Есть проблема с...",
+      "examples": [
+        "There is a problem with my room.",
+        "There is a problem with the payment."
+      ],
+      "source": "constructor: service",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Something is wrong with...",
+      "ru": "Что-то не так с...",
+      "examples": [
+        "Something is wrong with the card.",
+        "Something is wrong with the shower."
+      ],
+      "source": "constructor: service",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "Nice to meet you. I’m...",
+      "ru": "Приятно познакомиться. Я...",
+      "examples": [
+        "Nice to meet you. I’m Andrey.",
+        "Nice to meet you. I’m from Moscow."
+      ],
+      "source": "constructor: small talk",
+      "level": "A1",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’m from...",
+      "ru": "Я из...",
+      "examples": [
+        "I’m from Russia.",
+        "I’m from Moscow."
+      ],
+      "source": "constructor: small talk",
+      "level": "A1",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I live in...",
+      "ru": "Я живу в...",
+      "examples": [
+        "I live in Moscow region.",
+        "I live in Troitsk."
+      ],
+      "source": "constructor: small talk",
+      "level": "A1",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I work in...",
+      "ru": "Я работаю в...",
+      "examples": [
+        "I work in sales.",
+        "I work in outdoor kitchens and BBQ."
+      ],
+      "source": "constructor: small talk",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I’m interested in...",
+      "ru": "Меня интересует...",
+      "examples": [
+        "I’m interested in cars.",
+        "I’m interested in learning English."
+      ],
+      "source": "constructor: small talk",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I like... because...",
+      "ru": "Мне нравится..., потому что...",
+      "examples": [
+        "I like this city because it’s calm.",
+        "I like this game because it’s fun."
+      ],
+      "source": "constructor: small talk",
+      "level": "A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "I don’t like... because...",
+      "ru": "Мне не нравится..., потому что...",
+      "examples": [
+        "I don’t like this option because it’s expensive.",
+        "I don’t like waiting because it’s stressful."
+      ],
+      "source": "constructor: small talk",
+      "level": "A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "My son likes...",
+      "ru": "Моему сыну нравится...",
+      "examples": [
+        "My son likes Clash Royale.",
+        "My son likes football and games."
+      ],
+      "source": "constructor: family",
+      "level": "A1-A2",
+      "priority": "high",
+      "kind": "constructor"
+    },
+    {
+      "en": "We usually...",
+      "ru": "Мы обычно...",
+      "examples": [
+        "We usually practice in the evening.",
+        "We usually travel in autumn."
+      ],
+      "source": "constructor: routine",
+      "level": "A2",
+      "priority": "medium",
+      "kind": "constructor"
+    },
+    {
+      "en": "Sometimes I...",
+      "ru": "Иногда я...",
+      "examples": [
+        "Sometimes I study English with my son.",
+        "Sometimes I work on weekends."
+      ],
+      "source": "constructor: routine",
+      "level": "A2",
+      "priority": "medium",
+      "kind": "constructor"
+    }
+  ]
+}
