@@ -1,0 +1,394 @@
+{
+  "id": "pack-daily",
+  "title": "Быт и каждый день",
+  "emoji": "🏠",
+  "description": "Фразы для дома, дел, семьи, расписания, покупок и обычного дня.",
+  "version": 1,
+  "chunks": [
+    {
+      "en": "I need to do a few things.",
+      "ru": "Мне нужно сделать несколько дел.",
+      "examples": [
+        "I need to do a few things before work.",
+        "I need to do a few things at home."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I have a lot to do today.",
+      "ru": "У меня сегодня много дел.",
+      "examples": [
+        "I have a lot to do today, so I need a plan.",
+        "I have a lot to do today after work."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'm running late.",
+      "ru": "Я опаздываю.",
+      "examples": [
+        "I'm running late, I'll be there in ten minutes.",
+        "Sorry, I'm running late."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'll be there in ten minutes.",
+      "ru": "Я буду там через десять минут.",
+      "examples": [
+        "I'll be there in ten minutes, wait for me.",
+        "I'll be there in ten minutes if there is no traffic."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can you remind me to...?",
+      "ru": "Можешь напомнить мне...?",
+      "examples": [
+        "Can you remind me to call him?",
+        "Can you remind me to buy bread?"
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Don't forget to...",
+      "ru": "Не забудь...",
+      "examples": [
+        "Don't forget to take your keys.",
+        "Don't forget to charge your phone."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I forgot to...",
+      "ru": "Я забыл...",
+      "examples": [
+        "I forgot to send the message.",
+        "I forgot to buy milk."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I need to pick up...",
+      "ru": "Мне нужно забрать...",
+      "examples": [
+        "I need to pick up my son.",
+        "I need to pick up the order."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I need to drop off...",
+      "ru": "Мне нужно отвезти / завезти...",
+      "examples": [
+        "I need to drop off my son at school.",
+        "I need to drop off this package."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can you take care of it?",
+      "ru": "Можешь этим заняться?",
+      "examples": [
+        "Can you take care of it today?",
+        "Can you take care of it while I am away?"
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'll take care of it.",
+      "ru": "Я этим займусь.",
+      "examples": [
+        "I'll take care of it after lunch.",
+        "I'll take care of it today."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Let's do it later.",
+      "ru": "Давай сделаем это позже.",
+      "examples": [
+        "Let's do it later today.",
+        "Let's do it later when we have time."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Let's do it now.",
+      "ru": "Давай сделаем это сейчас.",
+      "examples": [
+        "Let's do it now and then relax.",
+        "Let's do it now before we forget."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I need some rest.",
+      "ru": "Мне нужно немного отдохнуть.",
+      "examples": [
+        "I need some rest after work.",
+        "I need some rest before training."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I didn't sleep well.",
+      "ru": "Я плохо спал.",
+      "examples": [
+        "I didn't sleep well last night.",
+        "I didn't sleep well, so I feel tired."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I feel better now.",
+      "ru": "Сейчас мне лучше.",
+      "examples": [
+        "I feel better now after coffee.",
+        "I feel better now after a walk."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'm tired, but I'm okay.",
+      "ru": "Я устал, но всё нормально.",
+      "examples": [
+        "I'm tired, but I'm okay today.",
+        "I'm tired, but I'm okay after training."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "What are your plans for today?",
+      "ru": "Какие у тебя планы на сегодня?",
+      "examples": [
+        "What are your plans for today after school?",
+        "What are your plans for today after work?"
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I need to clean up.",
+      "ru": "Мне нужно прибраться.",
+      "examples": [
+        "I need to clean up the kitchen.",
+        "I need to clean up before guests come."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can you help me clean up?",
+      "ru": "Можешь помочь мне прибраться?",
+      "examples": [
+        "Can you help me clean up the room?",
+        "Can you help me clean up after dinner?"
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'm going to cook dinner.",
+      "ru": "Я собираюсь приготовить ужин.",
+      "examples": [
+        "I'm going to cook dinner in an hour.",
+        "I'm going to cook dinner for the family."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "What should we have for dinner?",
+      "ru": "Что нам приготовить/съесть на ужин?",
+      "examples": [
+        "What should we have for dinner today?",
+        "What should we have for dinner tonight?"
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "We are out of...",
+      "ru": "У нас закончилось...",
+      "examples": [
+        "We are out of milk.",
+        "We are out of coffee."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I need to buy...",
+      "ru": "Мне нужно купить...",
+      "examples": [
+        "I need to buy some food.",
+        "I need to buy a new notebook."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can you send me the address?",
+      "ru": "Можешь прислать мне адрес?",
+      "examples": [
+        "Can you send me the address in WhatsApp?",
+        "Can you send me the address, please?"
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'm on my way.",
+      "ru": "Я уже еду / иду.",
+      "examples": [
+        "I'm on my way home.",
+        "I'm on my way to the office."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I'm almost there.",
+      "ru": "Я почти на месте.",
+      "examples": [
+        "I'm almost there, wait a minute.",
+        "I'm almost there now."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can we talk later?",
+      "ru": "Можем поговорить позже?",
+      "examples": [
+        "Can we talk later today?",
+        "Can we talk later when I am free?"
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I have to go now.",
+      "ru": "Мне сейчас нужно идти.",
+      "examples": [
+        "I have to go now, see you later.",
+        "I have to go now, I am late."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "See you later.",
+      "ru": "Увидимся позже.",
+      "examples": [
+        "See you later at home.",
+        "See you later today."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "I need to charge my phone.",
+      "ru": "Мне нужно зарядить телефон.",
+      "examples": [
+        "I need to charge my phone before we leave.",
+        "I need to charge my phone, it is almost dead."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "My battery is low.",
+      "ru": "У меня садится батарея.",
+      "examples": [
+        "My battery is low, I need a charger.",
+        "My battery is low, I will call you later."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Can I use your charger?",
+      "ru": "Можно воспользоваться твоей зарядкой?",
+      "examples": [
+        "Can I use your charger for ten minutes?",
+        "Can I use your charger, please?"
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "Let's make a plan.",
+      "ru": "Давай составим план.",
+      "examples": [
+        "Let's make a plan for the weekend.",
+        "Let's make a plan for tomorrow."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    },
+    {
+      "en": "We need to leave earlier.",
+      "ru": "Нам нужно выйти раньше.",
+      "examples": [
+        "We need to leave earlier tomorrow.",
+        "We need to leave earlier because of traffic."
+      ],
+      "source": "daily",
+      "level": "A1-A2",
+      "priority": "high"
+    }
+  ]
+}
